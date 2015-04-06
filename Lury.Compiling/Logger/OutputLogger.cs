@@ -103,13 +103,14 @@ namespace Lury.Compiling.Logger
         /// <param name="sourceCode">発生したソースコード全体。</param>
         /// <param name="position">発生したソースコード上の位置。</param>
         /// <param name="appendix">コンパイル出力に付随する追加の情報</param>
-        public void ReportError(int number,
+        public void ReportError<T>(T number,
                           string code = null,
                           string sourceCode = null,
                           CharPosition position = default(CharPosition),
                           string appendix = null)
+            where T : IConvertible
         {
-            this.outputs.Add(new CompileOutput(OutputCategory.Error, number, code, sourceCode, position, appendix));
+            this.outputs.Add(new CompileOutput(OutputCategory.Error, number.ToInt32(null), code, sourceCode, position, appendix));
         }
 
         /// <summary>
@@ -120,13 +121,14 @@ namespace Lury.Compiling.Logger
         /// <param name="sourceCode">発生したソースコード全体。</param>
         /// <param name="position">発生したソースコード上の位置。</param>
         /// <param name="appendix">コンパイル出力に付随する追加の情報</param>
-        public void ReportWarn(int number,
-                         string code = null,
-                         string sourceCode = null,
-                         CharPosition position = default(CharPosition),
-                         string appendix = null)
+        public void ReportWarn<T>(T number,
+                          string code = null,
+                          string sourceCode = null,
+                          CharPosition position = default(CharPosition),
+                          string appendix = null)
+            where T : IConvertible
         {
-            this.outputs.Add(new CompileOutput(OutputCategory.Warn, number, code, sourceCode, position, appendix));
+            this.outputs.Add(new CompileOutput(OutputCategory.Warn, number.ToInt32(null), code, sourceCode, position, appendix));
         }
 
         /// <summary>
@@ -137,13 +139,14 @@ namespace Lury.Compiling.Logger
         /// <param name="sourceCode">発生したソースコード全体。</param>
         /// <param name="position">発生したソースコード上の位置。</param>
         /// <param name="appendix">コンパイル出力に付随する追加の情報</param>
-        public void ReportInfo(int number,
-                         string code = null,
-                         string sourceCode = null,
-                         CharPosition position = default(CharPosition),
-                         string appendix = null)
+        public void ReportInfo<T>(T number,
+                          string code = null,
+                          string sourceCode = null,
+                          CharPosition position = default(CharPosition),
+                          string appendix = null)
+            where T : IConvertible
         {
-            this.outputs.Add(new CompileOutput(OutputCategory.Info, number, code, sourceCode, position, appendix));
+            this.outputs.Add(new CompileOutput(OutputCategory.Info, number.ToInt32(null), code, sourceCode, position, appendix));
         }
 
         /// <summary>

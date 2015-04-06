@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logger\CompileOutput.cs" />
+    <Compile Include="Logger\IMessageProvider.cs" />
     <Compile Include="Logger\OutputCategory.cs" />
     <Compile Include="Logger\OutputLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

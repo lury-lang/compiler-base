@@ -26,7 +26,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using System;
+using System.Collections.Generic;
 using Lury.Compiling.Utils;
 
 namespace Lury.Compiling.Logger
@@ -36,6 +36,18 @@ namespace Lury.Compiling.Logger
     /// </summary>
     public class CompileOutput
     {
+        #region -- Private Static Fields --
+
+        private static readonly List<IMessageProvider> providers = new List<IMessageProvider>();
+
+        #endregion
+
+        #region -- Public Static Properties --
+
+        public ICollection<IMessageProvider> MessageProviders { get { return providers; } }
+
+        #endregion
+
         #region -- Public Properties --
 
         /// <summary>
@@ -82,7 +94,12 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                // TODO: Implement message register
+                string message;
+
+                foreach (var provider in providers)
+                    if (provider.GetMessage(this.OutputNumber, this.Category, out message))
+                        return message;
+
                 return null;
             }
         }
@@ -95,7 +112,12 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                // TODO: Implement message register
+                string message;
+
+                foreach (var provider in providers)
+                    if (provider.GetSuggestion(this.OutputNumber, this.Category, out message))
+                        return message;
+
                 return null;
             }
         }
@@ -108,7 +130,12 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                // TODO: Implement message register
+                string message;
+
+                foreach (var provider in providers)
+                    if (provider.GetSiteLink(this.OutputNumber, this.Category, out message))
+                        return message;
+
                 return null;
             }
         }

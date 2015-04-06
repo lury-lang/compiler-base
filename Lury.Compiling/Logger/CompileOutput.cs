@@ -44,6 +44,9 @@ namespace Lury.Compiling.Logger
 
         #region -- Public Static Properties --
 
+        /// <summary>
+        /// メッセージプロバイダが格納されたコレクションを取得します。
+        /// </summary>
         public ICollection<IMessageProvider> MessageProviders { get { return providers; } }
 
         #endregion

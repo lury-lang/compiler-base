@@ -28,12 +28,40 @@
 
 namespace Lury.Compiling.Logger
 {
+    /// <summary>
+    /// コンパイル出力に対するメッセージ文字列を供給するメッセージプロバイダを規定します。
+    /// </summary>
     public interface IMessageProvider
     {
+        #region -- Methods --
+
+        /// <summary>
+        /// メッセージを取得します。
+        /// </summary>
+        /// <param name="number">エラー番号。</param>
+        /// <param name="category">出力メッセージのカテゴリ。</param>
+        /// <param name="message">プロバイダから取得された文字列。</param>
+        /// <returns>文字列を取得できたとき true、できないとき false。</returns>
         bool GetMessage(int number, OutputCategory category, out string message);
 
+        /// <summary>
+        /// 提案メッセージを取得します。
+        /// </summary>
+        /// <param name="number">エラー番号。</param>
+        /// <param name="category">出力メッセージのカテゴリ。</param>
+        /// <param name="message">プロバイダから取得された文字列。</param>
+        /// <returns>文字列を取得できたとき true、できないとき false。</returns>
         bool GetSuggestion(int number, OutputCategory category, out string suggestion);
 
+        /// <summary>
+        /// サイトリンクを取得します。
+        /// </summary>
+        /// <param name="number">エラー番号。</param>
+        /// <param name="category">出力メッセージのカテゴリ。</param>
+        /// <param name="message">プロバイダから取得された文字列。</param>
+        /// <returns>文字列を取得できたとき true、できないとき false。</returns>
         bool GetSiteLink(int number, OutputCategory category, out string siteLink);
+
+        #endregion
     }
 }

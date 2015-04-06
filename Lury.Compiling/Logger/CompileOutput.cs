@@ -47,7 +47,7 @@ namespace Lury.Compiling.Logger
         /// <summary>
         /// メッセージプロバイダが格納されたコレクションを取得します。
         /// </summary>
-        public ICollection<IMessageProvider> MessageProviders { get { return providers; } }
+        public static ICollection<IMessageProvider> MessageProviders { get { return providers; } }
 
         #endregion
 

@@ -27,6 +27,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Lury.Compiling.Utils
@@ -68,7 +69,7 @@ namespace Lury.Compiling.Utils
             if (index < 0 || index >= text.Length)
                 throw new ArgumentOutOfRangeException("index");
 
-            CharPosition 　position = CharPosition.BasePosition;
+            CharPosition position = CharPosition.BasePosition;
             Match prevMatch = null;
 
             foreach (Match match in NewLine.Matches(text))
@@ -76,7 +77,7 @@ namespace Lury.Compiling.Utils
                 if (match.Index + match.Length - 1 >= index)
                     break;
 
-                prevMatch = match; 
+                prevMatch = match;
                 position.Line++;
             }
 
@@ -133,7 +134,7 @@ namespace Lury.Compiling.Utils
 
             if (length == 0)
                 length++;
-                
+
             string cursorLine = text.GetLine(position.Line)
                 .Replace('\t', ' ')
                 .Replace('\r', ' ')
@@ -170,6 +171,34 @@ namespace Lury.Compiling.Utils
             int lineLength = ((line == matches.Count) ? text.Length : matches[line].Index) - lineIndex;
 
             return text.Substring(lineIndex, lineLength);
+        }
+
+        /// <summary>
+        /// 文字列に含まれる制御文字をバックスラッシュ付き文字に変換します。
+        /// </summary>
+        /// <param name="text">変換される文字列。</param>
+        /// <returns>変換された制御文字を含む文字列。</returns>
+        public static string ConvertControlChars(this string text)
+        {
+            if (text.Length < 1024)
+            {
+                return text.Replace("\r", "\\r")
+                           .Replace("\n", "\\n")
+                           .Replace("\f", "\\f")
+                           .Replace("\b", "\\b")
+                           .Replace("\t", "\\t");
+            }
+            else
+            {
+                StringBuilder sb = new StringBuilder(text);
+                sb.Replace("\r", "\\r")
+                  .Replace("\n", "\\n")
+                  .Replace("\f", "\\f")
+                  .Replace("\b", "\\b")
+                  .Replace("\t", "\\t");
+
+                return sb.ToString();
+            }
         }
 
         #endregion

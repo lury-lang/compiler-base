@@ -21,5 +21,18 @@ namespace UnitTest
             Assert.AreEqual(2, "\u2029".GetNumberOfLine());
             Assert.AreEqual(3, "\n\r".GetNumberOfLine());
         }
+
+        [TestMethod]
+        public void GetPositionByIndexTest()
+        {
+            Assert.AreEqual(CharPosition.BasePosition, String.Empty.GetPositionByIndex(0));
+            Assert.AreEqual(CharPosition.BasePosition, "abc123".GetPositionByIndex(0));
+            Assert.AreEqual(new CharPosition(1, 4), "abc123".GetPositionByIndex(3));
+            Assert.AreEqual(new CharPosition(2, 1), "ab\nc123".GetPositionByIndex(3));
+            Assert.AreEqual(new CharPosition(2, 1), "ab\r\nc123".GetPositionByIndex(3));
+            Assert.AreEqual(new CharPosition(1, 7), "abc123".GetPositionByIndex(6));
+            Assert.AreEqual(new CharPosition(2, 3), "abc\n123".GetPositionByIndex(6));
+            Assert.AreEqual(new CharPosition(2, 4), "abc\n123".GetPositionByIndex(7));
+        }
     }
 }

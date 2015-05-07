@@ -66,7 +66,7 @@ namespace Lury.Compiling.Utils
             if (text == null)
                 throw new ArgumentNullException("text");
 
-            if (index < 0 || index >= text.Length)
+            if (index < 0 || index > text.Length + 1)
                 throw new ArgumentOutOfRangeException("index");
 
             CharPosition position = CharPosition.BasePosition;

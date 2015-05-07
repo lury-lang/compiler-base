@@ -34,5 +34,26 @@ namespace UnitTest
             Assert.AreEqual(new CharPosition(2, 3), "abc\n123".GetPositionByIndex(6));
             Assert.AreEqual(new CharPosition(2, 4), "abc\n123".GetPositionByIndex(7));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GetPositionByIndexError1()
+        {
+            StringUtils.GetPositionByIndex(null, 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GetPositionByIndexError2()
+        {
+            "text".GetPositionByIndex(-1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GetPositionByIndexError3()
+        {
+            "text".GetPositionByIndex(6);
+        }
     }
 }

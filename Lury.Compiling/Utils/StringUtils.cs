@@ -74,7 +74,7 @@ namespace Lury.Compiling.Utils
 
             foreach (Match match in NewLine.Matches(text))
             {
-                if (match.Index + match.Length - 1 >= index)
+                if (match.Index >= index)
                     break;
 
                 prevMatch = match;
@@ -82,7 +82,7 @@ namespace Lury.Compiling.Utils
             }
 
             position.Column = (prevMatch == null) ? index + 1 :
-                     index - prevMatch.Index - prevMatch.Length + 1;
+                     index - prevMatch.Index;
 
             return position;
         }

@@ -80,5 +80,17 @@ namespace UnitTest
             Assert.AreEqual(2, strs.Length);
             StringAssert.Contains(strs[0], source);
         }
+
+        [TestMethod]
+        public void GetLineTest()
+        {
+            Assert.AreEqual(string.Empty, string.Empty.GetLine(1));
+            Assert.AreEqual("123", "123".GetLine(1));
+            Assert.AreEqual("123", "123\n".GetLine(1));
+            Assert.AreEqual(string.Empty, "123\n".GetLine(2));
+            Assert.AreEqual("123", "123\n\n456".GetLine(1));
+            Assert.AreEqual(string.Empty, "123\n\n456".GetLine(2));
+            Assert.AreEqual("456", "123\n\n456".GetLine(3));
+        }
     }
 }

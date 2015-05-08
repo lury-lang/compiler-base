@@ -56,5 +56,29 @@ namespace UnitTest
         {
             "text".GetPositionByIndex(6);
         }
+
+        [TestMethod]
+        public void GeneratePointingStrings1Test()
+        {
+            const string source = "abc";
+            CharPosition pos;
+            var strs = source.GeneratePointingStrings(1, 2, out pos);
+
+            CollectionAssert.AllItemsAreNotNull(strs);
+            Assert.AreEqual(2, strs.Length);
+            Assert.AreEqual(new CharPosition(1, 2), pos);
+            StringAssert.Contains(strs[0], source);
+        }
+
+        [TestMethod]
+        public void GeneratePointingStrings2Test()
+        {
+            const string source = "abc";
+            var strs = source.GeneratePointingStrings(new CharPosition(1, 2), 2);
+
+            CollectionAssert.AllItemsAreNotNull(strs);
+            Assert.AreEqual(2, strs.Length);
+            StringAssert.Contains(strs[0], source);
+        }
     }
 }

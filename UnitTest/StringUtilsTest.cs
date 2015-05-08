@@ -33,6 +33,7 @@ namespace UnitTest
             Assert.AreEqual(new CharPosition(1, 7), "abc123".GetPositionByIndex(6));
             Assert.AreEqual(new CharPosition(2, 3), "abc\n123".GetPositionByIndex(6));
             Assert.AreEqual(new CharPosition(2, 4), "abc\n123".GetPositionByIndex(7));
+            Assert.AreEqual(new CharPosition(2, 3), "abc\n123\n456".GetPositionByIndex(6));
         }
 
         [TestMethod]

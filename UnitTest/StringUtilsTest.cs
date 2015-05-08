@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Lury.Compiling.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -91,6 +92,17 @@ namespace UnitTest
             Assert.AreEqual("123", "123\n\n456".GetLine(1));
             Assert.AreEqual(string.Empty, "123\n\n456".GetLine(2));
             Assert.AreEqual("456", "123\n\n456".GetLine(3));
+        }
+
+        [TestMethod]
+        public void ConvertControlCharsTest()
+        {
+            Assert.AreEqual(@"\r\n\f\b\t", "\r\n\f\b\t".ConvertControlChars());
+
+            var input = string.Join("", Enumerable.Repeat("\r\n\f\b\t", 500));
+            var expect = string.Join("", Enumerable.Repeat(@"\r\n\f\b\t", 500));
+
+            Assert.AreEqual(expect, input.ConvertControlChars());
         }
     }
 }

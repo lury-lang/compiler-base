@@ -164,7 +164,7 @@ namespace Lury.Compiling.Utils
             var matches = NewLine.Matches(text);
             line--;
 
-            if (line < 0 || line >= matches.Count)
+            if (line < 0 || line > matches.Count)
                 throw new ArgumentOutOfRangeException("line");
 
             int lineIndex = (line == 0) ? 0 : matches[line - 1].Index + matches[line - 1].Length;

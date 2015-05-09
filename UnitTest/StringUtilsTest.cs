@@ -127,6 +127,37 @@ namespace UnitTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GeneratePointingStrings2Error1()
+        {
+            StringUtils.GeneratePointingStrings(null, new CharPosition(1, 2), 2);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GeneratePointingStrings2Error2()
+        {
+            const string source = "abc";
+            source.GeneratePointingStrings(CharPosition.Empty, 2);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GeneratePointingStrings2Error3()
+        {
+            const string source = "abc";
+            source.GeneratePointingStrings(CharPosition.BasePosition, -1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GeneratePointingStrings2Error4()
+        {
+            const string source = "abc";
+            source.GeneratePointingStrings(CharPosition.BasePosition, 4);
+        }
+
+        [TestMethod]
         public void GetLineTest()
         {
             Assert.AreEqual(string.Empty, string.Empty.GetLine(1));

@@ -72,6 +72,50 @@ namespace UnitTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GeneratePointingStrings1Error1()
+        {
+            CharPosition pos;
+            StringUtils.GeneratePointingStrings(null, 1, 2, out pos);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GeneratePointingStrings1Error2()
+        {
+            const string source = "abc";
+            CharPosition pos;
+            source.GeneratePointingStrings(-1, 2, out pos);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GeneratePointingStrings1Error3()
+        {
+            const string source = "abc";
+            CharPosition pos;
+            source.GeneratePointingStrings(3, 1, out pos);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GeneratePointingStrings1Error4()
+        {
+            const string source = "abc";
+            CharPosition pos;
+            source.GeneratePointingStrings(0, -1, out pos);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GeneratePointingStrings1Error5()
+        {
+            const string source = "abc";
+            CharPosition pos;
+            source.GeneratePointingStrings(0, 4, out pos);
+        }
+
+        [TestMethod]
         public void GeneratePointingStrings2Test()
         {
             const string source = "abc";

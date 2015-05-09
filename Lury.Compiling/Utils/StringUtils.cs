@@ -106,7 +106,7 @@ namespace Lury.Compiling.Utils
             if (index < 0 || index >= text.Length)
                 throw new ArgumentOutOfRangeException("index");
 
-            if (index + length > text.Length)
+            if (length < 0 || index + length > text.Length)
                 throw new ArgumentOutOfRangeException("length");
 
             position = text.GetPositionByIndex(index);

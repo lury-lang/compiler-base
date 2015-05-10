@@ -119,7 +119,7 @@ namespace UnitTest
         public void GeneratePointingStrings2Test()
         {
             const string source = "abc";
-            var strs = source.GeneratePointingStrings(new CharPosition(1, 2), 2);
+            var strs = source.GeneratePointingStrings(new CharPosition(1, 2), 0);
 
             CollectionAssert.AllItemsAreNotNull(strs);
             Assert.AreEqual(2, strs.Length);

@@ -170,6 +170,27 @@ namespace UnitTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GetLineError1()
+        {
+            StringUtils.GetLine(null, 1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GetLineError2()
+        {
+            "test".GetLine(0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void GetLineError3()
+        {
+            "test".GetLine(2);
+        }
+
+        [TestMethod]
         public void ConvertControlCharsTest()
         {
             Assert.AreEqual(@"\r\n\f\b\t", "\r\n\f\b\t".ConvertControlChars());

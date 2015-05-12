@@ -9,10 +9,10 @@ namespace UnitTest
     [TestClass]
     public class CompileOutputTest
     {
-        private const int number = 42;
+        private const int number = 0;
         private const string code = "code";
         private const string sourceCode = "source code";
-        private readonly CharPosition pos = new CharPosition(1, 8);
+        private static readonly CharPosition pos = new CharPosition(1, 8);
         private const string appendix = "appendix";
 
         [TestMethod]

@@ -115,11 +115,11 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                string message;
+                string suggestion;
 
                 foreach (var provider in providers)
-                    if (provider.GetSuggestion(this.OutputNumber, this.Category, out message))
-                        return message;
+                    if (provider.GetSuggestion(this.OutputNumber, this.Category, out suggestion))
+                        return suggestion;
 
                 return null;
             }
@@ -133,11 +133,11 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                string message;
+                string siteLink;
 
                 foreach (var provider in providers)
-                    if (provider.GetSiteLink(this.OutputNumber, this.Category, out message))
-                        return message;
+                    if (provider.GetSiteLink(this.OutputNumber, this.Category, out siteLink))
+                        return siteLink;
 
                 return null;
             }

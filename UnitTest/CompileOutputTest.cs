@@ -15,11 +15,26 @@ namespace UnitTest
         private static readonly CharPosition pos = new CharPosition(1, 8);
         private const string appendix = "appendix";
 
+        private static OutputLogger logger = new OutputLogger();
+
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext context)
+        {
+            logger.ReportInfo(number, code, sourceCode, pos, appendix);
+            logger.ReportWarn(1, code, sourceCode, pos, appendix);
+            logger.ReportError(2, code, sourceCode, pos, appendix);
+            logger.ReportInfo(3, code, sourceCode, pos, appendix);
+            logger.ReportWarn(4, code, sourceCode, pos, appendix);
+            logger.ReportError(5, code, sourceCode, pos, appendix);
+
+            CompileOutput.MessageProviders.Add(new MessageProviderInfo());
+            CompileOutput.MessageProviders.Add(new MessageProviderWarn());
+            CompileOutput.MessageProviders.Add(new MessageProviderError());
+        }
+
         [TestMethod]
         public void ConstructorTest()
         {
-            OutputLogger logger = new OutputLogger();
-            logger.ReportInfo(number, code, sourceCode, pos, appendix);
             CompileOutput output = logger.Outputs.First();
 
             Assert.AreEqual(OutputCategory.Info, output.Category);

@@ -44,5 +44,221 @@ namespace UnitTest
             Assert.AreEqual(pos, output.Position);
             Assert.AreEqual(appendix, output.Appendix);
         }
+
+        [TestMethod]
+        public void OutputNumberTest()
+        {
+            CompileOutput output = logger.Outputs.First();
+            Assert.AreEqual(number, output.OutputNumber);
+        }
+
+        [TestMethod]
+        public void CategoryTest()
+        {
+            CompileOutput output = logger.Outputs.First();
+            Assert.AreEqual(OutputCategory.Info, output.Category);
+        }
+
+        [TestMethod]
+        public void PositionTest()
+        {
+            CompileOutput output = logger.Outputs.First();
+            Assert.AreEqual(pos, output.Position);
+        }
+
+        [TestMethod]
+        public void CodeTest()
+        {
+            CompileOutput output = logger.Outputs.First();
+            Assert.AreEqual(code, output.Code);
+        }
+
+        [TestMethod]
+        public void SourceCodeTest()
+        {
+            CompileOutput output = logger.Outputs.First();
+            Assert.AreEqual(sourceCode, output.SourceCode);
+        }
+
+        [TestMethod]
+        public void AppendixTest()
+        {
+            CompileOutput output = logger.Outputs.First();
+            Assert.AreEqual(appendix, output.Appendix);
+        }
+
+        [TestMethod]
+        public void MessageTest()
+        {
+            CompileOutput[] outputs = logger.Outputs.ToArray();
+            Assert.AreEqual(MessageProviderInfo.Message, outputs[0].Message);
+            Assert.AreEqual(MessageProviderWarn.Message, outputs[1].Message);
+            Assert.AreEqual(MessageProviderError.Message, outputs[2].Message);
+            Assert.IsNull(outputs[3].Message);
+            Assert.IsNull(outputs[4].Message);
+            Assert.IsNull(outputs[5].Message);
+        }
+
+        [TestMethod]
+        public void SuggestionTest()
+        {
+            CompileOutput[] outputs = logger.Outputs.ToArray();
+            Assert.AreEqual(MessageProviderInfo.Suggestion, outputs[0].Suggestion);
+            Assert.AreEqual(MessageProviderWarn.Suggestion, outputs[1].Suggestion);
+            Assert.AreEqual(MessageProviderError.Suggestion, outputs[2].Suggestion);
+            Assert.IsNull(outputs[3].Suggestion);
+            Assert.IsNull(outputs[4].Suggestion);
+            Assert.IsNull(outputs[5].Suggestion);
+        }
+
+        [TestMethod]
+        public void SiteLinkTest()
+        {
+            CompileOutput[] outputs = logger.Outputs.ToArray();
+            Assert.AreEqual(MessageProviderInfo.SiteLink, outputs[0].SiteLink);
+            Assert.AreEqual(MessageProviderWarn.SiteLink, outputs[1].SiteLink);
+            Assert.AreEqual(MessageProviderError.SiteLink, outputs[2].SiteLink);
+            Assert.IsNull(outputs[3].SiteLink);
+            Assert.IsNull(outputs[4].SiteLink);
+            Assert.IsNull(outputs[5].SiteLink);
+        }
+    }
+
+    class MessageProviderInfo : IMessageProvider
+    {
+        public const string Message = "MessageInfo";
+        public const string Suggestion = "SuggestionInfo";
+        public const string SiteLink = "SiteLinkInfo";
+
+        public bool GetMessage(int number, OutputCategory category, out string message)
+        {
+            message = null;
+
+            if (number == 0 && category == OutputCategory.Info)
+            {
+                message = Message;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool GetSuggestion(int number, OutputCategory category, out string suggestion)
+        {
+            suggestion = null;
+
+            if (number == 0 && category == OutputCategory.Info)
+            {
+                suggestion = Suggestion;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool GetSiteLink(int number, OutputCategory category, out string siteLink)
+        {
+            siteLink = null;
+
+            if (number == 0 && category == OutputCategory.Info)
+            {
+                siteLink = SiteLink;
+                return true;
+            }
+            else
+                return false;
+        }
+    }
+
+    class MessageProviderWarn : IMessageProvider
+    {
+        public const string Message = "MessageWarn";
+        public const string Suggestion = "SuggestionWarn";
+        public const string SiteLink = "SiteLinkWarn";
+
+        public bool GetMessage(int number, OutputCategory category, out string message)
+        {
+            message = null;
+
+            if (number == 1 && category == OutputCategory.Warn)
+            {
+                message = Message;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool GetSuggestion(int number, OutputCategory category, out string suggestion)
+        {
+            suggestion = null;
+
+            if (number == 1 && category == OutputCategory.Warn)
+            {
+                suggestion = Suggestion;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool GetSiteLink(int number, OutputCategory category, out string siteLink)
+        {
+            siteLink = null;
+
+            if (number == 1 && category == OutputCategory.Warn)
+            {
+                siteLink = SiteLink;
+                return true;
+            }
+            else
+                return false;
+        }
+    }
+
+    class MessageProviderError : IMessageProvider
+    {
+        public const string Message = "MessageError";
+        public const string Suggestion = "SuggestionError";
+        public const string SiteLink = "SiteLinkError";
+
+        public bool GetMessage(int number, OutputCategory category, out string message)
+        {
+            message = null;
+
+            if (number == 2 && category == OutputCategory.Error)
+            {
+                message = Message;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool GetSuggestion(int number, OutputCategory category, out string suggestion)
+        {
+            suggestion = null;
+
+            if (number == 2 && category == OutputCategory.Error)
+            {
+                suggestion = Suggestion;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool GetSiteLink(int number, OutputCategory category, out string siteLink)
+        {
+            siteLink = null;
+
+            if (number == 2 && category == OutputCategory.Error)
+            {
+                siteLink = SiteLink;
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }

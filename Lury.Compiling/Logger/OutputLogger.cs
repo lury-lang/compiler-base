@@ -157,6 +157,17 @@ namespace Lury.Compiling.Logger
             this.outputs.Clear();
         }
 
+        /// <summary>
+        /// コンパイル出力を別の <see cref="Lury.Compiling.Logger.OutputLogger"/> オブジェクトに
+        /// コピーします。元の要素は削除されません。
+        /// </summary>
+        /// <param name="otherLogger">コピー先の <see cref="Lury.Compiling.Logger.OutputLogger"/> オブジェクト。</param>
+        public void CopyTo(OutputLogger otherLogger)
+        {
+            foreach (var output in this.outputs)
+                otherLogger.outputs.Add(output);
+        }
+
         #endregion
     }
 }

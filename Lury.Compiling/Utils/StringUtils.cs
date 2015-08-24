@@ -140,7 +140,9 @@ namespace Lury.Compiling.Utils
                 .Replace('\r', ' ')
                 .Replace('\n', ' ');
 
-            if (cursorLine.Length < length)
+            // issue #1: StringUtils#GeneratePointingStringsが空行でエラー
+            // https://github.com/lury-lang/compiler-base/issues/1
+            if (cursorLine.Length > 0 && cursorLine.Length < length)
                 throw new ArgumentOutOfRangeException("length");
 
             return new string[]

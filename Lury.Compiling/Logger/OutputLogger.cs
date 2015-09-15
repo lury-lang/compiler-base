@@ -106,7 +106,7 @@ namespace Lury.Compiling.Logger
         public void ReportError<T>(T number,
                           string code = null,
                           string sourceCode = null,
-                          CharPosition position = default(CharPosition),
+                          CodePosition position = null,
                           string appendix = null)
             where T : IConvertible
         {
@@ -124,7 +124,7 @@ namespace Lury.Compiling.Logger
         public void ReportWarn<T>(T number,
                           string code = null,
                           string sourceCode = null,
-                          CharPosition position = default(CharPosition),
+                          CodePosition position = null,
                           string appendix = null)
             where T : IConvertible
         {
@@ -142,7 +142,7 @@ namespace Lury.Compiling.Logger
         public void ReportInfo<T>(T number,
                           string code = null,
                           string sourceCode = null,
-                          CharPosition position = default(CharPosition),
+                          CodePosition position = null,
                           string appendix = null)
             where T : IConvertible
         {

@@ -14,18 +14,21 @@ namespace UnitTest
         private const string sourceCode = "source code";
         private static readonly CharPosition pos = new CharPosition(1, 8);
         private const string appendix = "appendix";
+        private const string sourceName = "sourceName";
+        private const int codePosLength = 3;
+        private static readonly CodePosition codePos = new CodePosition(sourceName, pos, codePosLength);
 
         private static OutputLogger logger = new OutputLogger();
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            logger.ReportInfo(number, code, sourceCode, pos, appendix);
-            logger.ReportWarn(1, code, sourceCode, pos, appendix);
-            logger.ReportError(2, code, sourceCode, pos, appendix);
-            logger.ReportInfo(3, code, sourceCode, pos, appendix);
-            logger.ReportWarn(4, code, sourceCode, pos, appendix);
-            logger.ReportError(5, code, sourceCode, pos, appendix);
+            logger.ReportInfo(number, code, sourceCode, codePos, appendix);
+            logger.ReportWarn(1, code, sourceCode, codePos, appendix);
+            logger.ReportError(2, code, sourceCode, codePos, appendix);
+            logger.ReportInfo(3, code, sourceCode, codePos, appendix);
+            logger.ReportWarn(4, code, sourceCode, codePos, appendix);
+            logger.ReportError(5, code, sourceCode, codePos, appendix);
 
             CompileOutput.MessageProviders.Add(new MessageProviderInfo());
             CompileOutput.MessageProviders.Add(new MessageProviderWarn());
@@ -41,7 +44,7 @@ namespace UnitTest
             Assert.AreEqual(number, output.OutputNumber);
             Assert.AreEqual(code, output.Code);
             Assert.AreEqual(sourceCode, output.SourceCode);
-            Assert.AreEqual(pos, output.Position);
+            Assert.AreEqual(codePos, output.Position);
             Assert.AreEqual(appendix, output.Appendix);
         }
 
@@ -63,7 +66,7 @@ namespace UnitTest
         public void PositionTest()
         {
             CompileOutput output = logger.Outputs.First();
-            Assert.AreEqual(pos, output.Position);
+            Assert.AreEqual(codePos, output.Position);
         }
 
         [TestMethod]

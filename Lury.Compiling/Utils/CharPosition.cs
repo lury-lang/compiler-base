@@ -86,7 +86,7 @@ namespace Lury.Compiling.Utils
         }
 
         /// <summary>
-        /// この <see cref="Lury.CharPosition"/> オブジェクトが
+        /// この <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトが
         /// 空（どの位置も指し示さない）であるかの真偽値を取得します。
         /// </summary>
         /// <value>true のときこのオブジェクトは空、それ以外のとき false。</value>
@@ -101,15 +101,15 @@ namespace Lury.Compiling.Utils
 
         /// <summary>
         /// 文字列中のどの位置も指し示さないような、
-        /// 空の <see cref="Lury.CharPosition"/> オブジェクトを取得します。
+        /// 空の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトを取得します。
         /// </summary>
-        /// <value>空の <see cref="Lury.CharPosition"/> オブジェクト。</value>
+        /// <value>空の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</value>
         public static CharPosition Empty { get { return empty; } }
 
         /// <summary>
-        /// 文字列の先頭を指し示す <see cref="Lury.CharPosition"/> オブジェクトを取得します。
+        /// 文字列の先頭を指し示す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトを取得します。
         /// </summary>
-        /// <value>先頭を指し示す <see cref="Lury.CharPosition"/> オブジェクト。</value>
+        /// <value>先頭を指し示す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</value>
         public static CharPosition BasePosition { get { return basePosition; } }
 
         #endregion
@@ -117,7 +117,7 @@ namespace Lury.Compiling.Utils
         #region -- Constructor --
 
         /// <summary>
-        /// 行と列を指定して新しい <see cref="Lury.CharPosition"/> 構造体のインスタンスを初期化します。
+        /// 行と列を指定して新しい <see cref="Lury.Compiling.Utils.CharPosition"/> 構造体のインスタンスを初期化します。
         /// </summary>
         /// <param name="line">行位置。</param>
         /// <param name="column">列位置。</param>
@@ -177,8 +177,8 @@ namespace Lury.Compiling.Utils
         /// <summary>
         /// 2つの <see cref="Lury.CharPosition"/> オブジェクトが等価であるかを判定します。
         /// </summary>
-        /// <param name="cp1">1つ目の <see cref="Lury.CharPosition"/> オブジェクト。</param>
-        /// <param name="cp2">2つ目の <see cref="Lury.CharPosition"/> オブジェクト。</param>
+        /// <param name="cp1">1つ目の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
+        /// <param name="cp2">2つ目の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
         /// <returns>2つのオブジェクトが等価であるとき true、それ以外のとき false。</returns>
         public static bool operator ==(CharPosition cp1, CharPosition　cp2)
         {
@@ -188,8 +188,8 @@ namespace Lury.Compiling.Utils
         /// <summary>
         /// 2つの <see cref="Lury.CharPosition"/> オブジェクトが等価でないかを判定します。
         /// </summary>
-        /// <param name="cp1">1つ目の <see cref="Lury.CharPosition"/> オブジェクト。</param>
-        /// <param name="cp2">2つ目の <see cref="Lury.CharPosition"/> オブジェクト。</param>
+        /// <param name="cp1">1つ目の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
+        /// <param name="cp2">2つ目の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
         /// <returns>2つのオブジェクトが等価でないとき true、それ以外のとき false。</returns>
         public static bool operator !=(CharPosition cp1, CharPosition　cp2)
         {

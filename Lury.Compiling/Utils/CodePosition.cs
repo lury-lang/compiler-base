@@ -27,6 +27,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.IO;
 
 namespace Lury.Compiling.Utils
 {
@@ -82,6 +83,19 @@ namespace Lury.Compiling.Utils
         public CodePosition(string sourceName, CharPosition position)
             : this(sourceName, position, 0)
         {
+        }
+
+        #endregion
+
+        #region -- Public Methods --
+
+        /// <summary>
+        /// 現在のオブジェクトを表す文字列を返します。
+        /// </summary>
+        /// <returns>現在のオブジェクトを説明する文字列。</returns>
+        public override string ToString()
+        {
+            return string.Format("{0}#{1}", this.Position, Path.GetFileName(this.SourceName));
         }
 
         #endregion

@@ -98,6 +98,57 @@ namespace Lury.Compiling.Utils
             return string.Format("{0}#{1}", this.Position, Path.GetFileName(this.SourceName));
         }
 
+        /// <summary>
+        /// 指定した <see cref="System.Object"/> が、現在の <see cref="System.Object"/> と等しいかどうかを判断します。
+        /// </summary>
+        /// <param name="obj">現在のオブジェクトと比較するオブジェクト。</param>
+        /// <returns>指定したオブジェクトが現在のオブジェクトと等しい場合は true。それ以外の場合は false。</returns>
+        public override bool Equals(object obj)
+        {
+            if (!(obj is CodePosition))
+                return false;
+            else
+                return CodePosition.Equals(this, (CodePosition)obj);
+        }
+
+        /// <summary>
+        /// 特定の型のハッシュ関数として機能します。
+        /// </summary>
+        /// <returns>現在の <see cref="Lury.Compiling.Utils.CodePosition"/> のハッシュ コード。</returns>
+        public override int GetHashCode()
+        {
+            return this.Position.GetHashCode() ^ this.Length.GetHashCode() ^ this.SourceName.GetHashCode();
+        }
+
+        /// <summary>
+        /// 指定されたインスタンスが等しいかどうかを判断します。
+        /// </summary>
+        /// <param name="objA">比較対象の第 1 オブジェクト。</param>
+        /// <param name="objB">2 番目に比較するオブジェクト。</param>
+        /// <returns>オブジェクトが等しいと見なされた場合は true。それ以外の場合は false。
+        /// objA と objB の両方が null の場合、このメソッドは true を返します。</returns>
+        public static bool Equals(CodePosition objA, CodePosition objB)
+        {
+            if (objA == null && objB == null)
+                return true;
+            else if (objA != null && objB != null)
+                return (objA.Position == objB.Position) &&
+                       (objA.Length == objB.Length) &&
+                       (objA.SourceName == objB.SourceName);
+            else
+                return false;
+        }
+
+        public static bool operator==(CodePosition objA, CodePosition objB)
+        {
+            return CodePosition.Equals(objA, objB);
+        }
+
+        public static bool operator !=(CodePosition objA, CodePosition objB)
+        {
+            return !CodePosition.Equals(objA, objB);
+        }
+
         #endregion
     }
 }

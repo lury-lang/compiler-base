@@ -127,6 +127,26 @@ namespace UnitTest
         }
 
         [TestMethod]
+        public void GeneratePointingStrings3Test()
+        {
+            const string source = "abc\n";
+            var strs = source.GeneratePointingStrings(new CharPosition(2, 1), 0);
+
+            CollectionAssert.AllItemsAreNotNull(strs);
+            Assert.AreEqual(2, strs.Length);
+        }
+
+        [TestMethod]
+        public void GeneratePointingStrings4Test()
+        {
+            const string source = "abc\n";
+            var strs = source.GeneratePointingStrings(new CharPosition(2, 1), 1);
+
+            CollectionAssert.AllItemsAreNotNull(strs);
+            Assert.AreEqual(2, strs.Length);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void GeneratePointingStrings2Error1()
         {

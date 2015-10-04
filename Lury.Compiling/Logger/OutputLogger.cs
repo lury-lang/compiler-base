@@ -164,6 +164,9 @@ namespace Lury.Compiling.Logger
         /// <param name="otherLogger">コピー先の <see cref="Lury.Compiling.Logger.OutputLogger"/> オブジェクト。</param>
         public void CopyTo(OutputLogger otherLogger)
         {
+            if (otherLogger == null)
+                throw new ArgumentNullException("otherLogger");
+
             foreach (var output in this.outputs)
                 otherLogger.outputs.Add(output);
         }

@@ -129,9 +129,9 @@ namespace Lury.Compiling.Utils
         /// objA と objB の両方が null の場合、このメソッドは true を返します。</returns>
         public static bool Equals(CodePosition objA, CodePosition objB)
         {
-            if (objA == null && objB == null)
+            if ((object)objA == null && (object)objB == null)
                 return true;
-            else if (objA != null && objB != null)
+            else if ((object)objA != null && (object)objB != null)
                 return (objA.Position == objB.Position) &&
                        (objA.Length == objB.Length) &&
                        (objA.SourceName == objB.SourceName);

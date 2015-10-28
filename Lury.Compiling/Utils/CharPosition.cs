@@ -180,7 +180,7 @@ namespace Lury.Compiling.Utils
         /// <param name="cp1">1つ目の <see cref="CharPosition"/> オブジェクト。</param>
         /// <param name="cp2">2つ目の <see cref="CharPosition"/> オブジェクト。</param>
         /// <returns>2つのオブジェクトが等価であるとき true、それ以外のとき false。</returns>
-        public static bool operator ==(CharPosition cp1, CharPosition　cp2)
+        public static bool operator ==(CharPosition cp1, CharPosition cp2)
         {
             return cp1.line == cp2.line && cp1.column == cp2.column;
         }
@@ -191,7 +191,7 @@ namespace Lury.Compiling.Utils
         /// <param name="cp1">1つ目の <see cref="CharPosition"/> オブジェクト。</param>
         /// <param name="cp2">2つ目の <see cref="CharPosition"/> オブジェクト。</param>
         /// <returns>2つのオブジェクトが等価でないとき true、それ以外のとき false。</returns>
-        public static bool operator !=(CharPosition cp1, CharPosition　cp2)
+        public static bool operator !=(CharPosition cp1, CharPosition cp2)
         {
             return cp1.line != cp2.line || cp1.column != cp2.column;
         }

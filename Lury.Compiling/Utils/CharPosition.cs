@@ -175,10 +175,10 @@ namespace Lury.Compiling.Utils
         #region -- Public Static Methods --
 
         /// <summary>
-        /// 2つの <see cref="Lury.CharPosition"/> オブジェクトが等価であるかを判定します。
+        /// 2つの <see cref="CharPosition"/> オブジェクトが等価であるかを判定します。
         /// </summary>
-        /// <param name="cp1">1つ目の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
-        /// <param name="cp2">2つ目の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
+        /// <param name="cp1">1つ目の <see cref="CharPosition"/> オブジェクト。</param>
+        /// <param name="cp2">2つ目の <see cref="CharPosition"/> オブジェクト。</param>
         /// <returns>2つのオブジェクトが等価であるとき true、それ以外のとき false。</returns>
         public static bool operator ==(CharPosition cp1, CharPosition　cp2)
         {
@@ -186,10 +186,10 @@ namespace Lury.Compiling.Utils
         }
 
         /// <summary>
-        /// 2つの <see cref="Lury.CharPosition"/> オブジェクトが等価でないかを判定します。
+        /// 2つの <see cref="CharPosition"/> オブジェクトが等価でないかを判定します。
         /// </summary>
-        /// <param name="cp1">1つ目の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
-        /// <param name="cp2">2つ目の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
+        /// <param name="cp1">1つ目の <see cref="CharPosition"/> オブジェクト。</param>
+        /// <param name="cp2">2つ目の <see cref="CharPosition"/> オブジェクト。</param>
         /// <returns>2つのオブジェクトが等価でないとき true、それ以外のとき false。</returns>
         public static bool operator !=(CharPosition cp1, CharPosition　cp2)
         {

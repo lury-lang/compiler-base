@@ -40,7 +40,7 @@ namespace Lury.Compiling.Logger
         /// </summary>
         /// <param name="number">エラー番号。</param>
         /// <param name="category">出力メッセージのカテゴリ。</param>
-        /// <param name="message">プロバイダから取得された文字列。</param>
+        /// <param name="message">プロバイダから取得されたメッセージを表す文字列。</param>
         /// <returns>文字列を取得できたとき true、できないとき false。</returns>
         bool GetMessage(int number, OutputCategory category, out string message);
 
@@ -49,7 +49,7 @@ namespace Lury.Compiling.Logger
         /// </summary>
         /// <param name="number">エラー番号。</param>
         /// <param name="category">出力メッセージのカテゴリ。</param>
-        /// <param name="message">プロバイダから取得された文字列。</param>
+        /// <param name="suggestion">プロバイダから取得された提案メッセージを表す文字列。</param>
         /// <returns>文字列を取得できたとき true、できないとき false。</returns>
         bool GetSuggestion(int number, OutputCategory category, out string suggestion);
 
@@ -58,7 +58,7 @@ namespace Lury.Compiling.Logger
         /// </summary>
         /// <param name="number">エラー番号。</param>
         /// <param name="category">出力メッセージのカテゴリ。</param>
-        /// <param name="message">プロバイダから取得された文字列。</param>
+        /// <param name="siteLink">プロバイダから取得されたサイトリンクを表す文字列。</param>
         /// <returns>文字列を取得できたとき true、できないとき false。</returns>
         bool GetSiteLink(int number, OutputCategory category, out string siteLink);
 

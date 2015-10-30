@@ -188,20 +188,35 @@ namespace Lury.Compiling.Utils
         {
             if (text.Length < 1024)
             {
-                return text.Replace("\r", "\\r")
+                return text.Replace("\\", "\\\\")
+                           .Replace("\r", "\\r")
                            .Replace("\n", "\\n")
-                           .Replace("\f", "\\f")
+                           .Replace("\t", "\\t")
+                           .Replace("\'", "\\'")
+                           .Replace("\"", "\\\"")
+                           .Replace("\0", "\\0")
+                           .Replace("\a", "\\a")
                            .Replace("\b", "\\b")
-                           .Replace("\t", "\\t");
+                           .Replace("\f", "\\f")
+                           .Replace("\v", "\\v");
             }
             else
             {
-                StringBuilder sb = new StringBuilder(text);
-                sb.Replace("\r", "\\r")
-                  .Replace("\n", "\\n")
-                  .Replace("\f", "\\f")
-                  .Replace("\b", "\\b")
-                  .Replace("\t", "\\t");
+                return new StringBuilder(text, text.Length * 2)
+                    .Replace("\\", "\\\\")
+                    .Replace("\r", "\\r")
+                    .Replace("\n", "\\n")
+                    .Replace("\t", "\\t")
+                    .Replace("\'", "\\'")
+                    .Replace("\"", "\\\"")
+                    .Replace("\0", "\\0")
+                    .Replace("\a", "\\a")
+                    .Replace("\b", "\\b")
+                    .Replace("\f", "\\f")
+                    .Replace("\v", "\\v")
+                    .ToString();
+            }
+        }
         
         /// <summary>
         /// 文字列を表す記号を除去し、エスケープ文字を通常の文字に変換した文字列を返します。
@@ -224,8 +239,8 @@ namespace Lury.Compiling.Utils
             TrimMarker(sb, marker);
             ReplaceEscapeChar(sb);
 
-                return sb.ToString();
-            }
+            return sb.ToString();
+        }
 
         #endregion
 

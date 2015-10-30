@@ -27,6 +27,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -40,6 +41,9 @@ namespace Lury.Compiling.Utils
         #region -- Private Static Fields --
 
         private static readonly Regex NewLine = new Regex(@"(?:\n|(?:\r\n)|\r|\u2028|\u2029)", RegexOptions.Compiled | RegexOptions.Singleline);
+        private static readonly Regex unicode_hex = new Regex(@"\\x[0-9A-Fa-f]{1,4}", RegexOptions.Compiled);
+        private static readonly Regex unicode_hex4 = new Regex(@"\\u[0-9A-Fa-f]{4}", RegexOptions.Compiled);
+        private static readonly Regex unicode_hex8 = new Regex(@"\\U[0-9A-Fa-f]{8}", RegexOptions.Compiled);
 
         #endregion
 
@@ -198,8 +202,88 @@ namespace Lury.Compiling.Utils
                   .Replace("\f", "\\f")
                   .Replace("\b", "\\b")
                   .Replace("\t", "\\t");
+        
+        /// <summary>
+        /// 文字列を表す記号を除去し、エスケープ文字を通常の文字に変換した文字列を返します。
+        /// </summary>
+        /// <param name="text">変換される文字列。開始文字と終端文字が同一で、少なくとも 2 文字以上の文字列。</param>
+        /// <returns>開始文字と終端文字を除去し、エスケープ文字、Unicodeエスケープ文字が変換された文字列。</returns>
+        public static string ConvertFromEscapedString(this string text)
+        {
+            if (text == null)
+                throw new ArgumentNullException("text");
+
+            if (text.Length < 2)
+                throw new ArgumentException("text");
+
+            char marker = text[0];
+
+            ReplaceUnicodeChar(ref text);
+
+            var sb = new StringBuilder(text);
+            TrimMarker(sb, marker);
+            ReplaceEscapeChar(sb);
 
                 return sb.ToString();
+            }
+
+        #endregion
+
+        #region -- Private Methods --
+
+        private static void TrimMarker(StringBuilder value, char marker)
+        {
+            if (value[0] != marker || value[value.Length - 1] != marker)
+                throw new ArgumentException("value");
+
+            value.Remove(0, 1);
+            value.Remove(value.Length - 1, 1);
+        }
+
+        private static void ReplaceEscapeChar(StringBuilder value)
+        {
+            value.Replace(@"\\", "\\");
+            value.Replace(@"\'", "'");
+            value.Replace(@"\""", "\"");
+            value.Replace(@"\a", "\a");
+            value.Replace(@"\b", "\b");
+            value.Replace(@"\f", "\f");
+            value.Replace(@"\n", "\n");
+            value.Replace(@"\r", "\r");
+            value.Replace(@"\t", "\t");
+            value.Replace(@"\v", "\v");
+        }
+
+        private static void ReplaceUnicodeChar(ref string value)
+        {
+            // Refer to:
+            // http://stackoverflow.com/questions/183907
+
+            // type \xX - \xXXXX
+            value = unicode_hex.Replace(value, m => ((char)Int16.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
+
+            // type: \uXXXX
+            value = unicode_hex4.Replace(value, m => ((char)Int32.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
+
+            // type: \UXXXXXXXX
+            value = unicode_hex8.Replace(value, m => ToUTF16(m.Value.Substring(2)));
+        }
+
+        private static string ToUTF16(string hex)
+        {
+            int value = int.Parse(hex, NumberStyles.HexNumber);
+
+            if (value < 0 || value > 0x10ffff)
+                throw new ArgumentException("hex");
+
+            if (value <= 0x00ff)
+                return ((char)value).ToString();
+            else
+            {
+                int w = value - 0x10000;
+                char high = (char)(0xd800 | (w >> 10) & 0x03ff);
+                char low = (char)(0xdc00 | (w >> 0) & 0x03ff);
+                return new string(new char[2] { high, low });
             }
         }
 

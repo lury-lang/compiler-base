@@ -186,6 +186,9 @@ namespace Lury.Compiling.Utils
         /// <returns>変換された制御文字を含む文字列。</returns>
         public static string ConvertControlChars(this string text)
         {
+            if (text == null)
+                throw new ArgumentNullException("text");
+
             if (text.Length < 1024)
             {
                 return text.Replace("\\", "\\\\")

@@ -36,6 +36,9 @@ namespace Lury.Compiling.Utils
     /// <summary>
     /// 文字列に対する拡張メソッドを提供します。
     /// </summary>
+    /// <remarks>
+    /// <see cref="StringUtils"/> クラスは <see cref="Lury"/> 名前空間で用いられる、文字列のメソッド群をまとめたものです。
+    /// </remarks>
     public static class StringUtils
     {
         #region -- Private Static Fields --
@@ -54,6 +57,12 @@ namespace Lury.Compiling.Utils
         /// </summary>
         /// <returns>指定された文字列の行数。</returns>
         /// <param name="text">文字列。null の場合は常に 0 が返されます。</param>
+        /// <remarks>
+        /// 指定された文字列の改行文字を集計し、文字列の行数を計算します。指定された文字列が null でなく、
+        /// かつ改行文字が含まれない場合は常に 1 が返されます。文字列が null の場合は常に 0 が返されます。
+        /// <c>\\r\\n</c> のような二文字一組の改行文字は一つの改行として集計されます。
+        /// このメソッドは複数の改行文字種が混在していても集計を行います。
+        /// </remarks>
         public static int GetNumberOfLine(this string text)
         {
             return (text == null) ? 0 : NewLine.Matches(text).Count + 1;
@@ -62,9 +71,19 @@ namespace Lury.Compiling.Utils
         /// <summary>
         /// 文字列の行と列の位置をインデクスから求めます。
         /// </summary>
-        /// <returns>インデクスに対応する行と列の位置。</returns>
+        /// <returns>インデクスに対応する行と列の位置を格納した <see cref="CharPosition"/> オブジェクト。</returns>
         /// <param name="text">文字列。</param>
         /// <param name="index">文字列の位置を指し示すインデクス。</param>
+        /// <exception cref="ArgumentNullException">パラメータ text が null です。</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// パラメータ index が 0 未満、または text の長さに 1 加えた数よりも大きいです。
+        /// </exception>
+        /// <remarks>
+        /// 指定された文字列とインデクスから、行と列の位置を表す <see cref="CharPosition"/> オブジェクトを取得します。
+        /// パラメータ text は null を許容されず、index は 0 未満や text の長さに 1 加えた数より大きくすることはできません。
+        /// index の値に text の長さに 1 加えた数が指定された場合、それは文字列の最終端の位置を表す
+        /// <see cref="CharPosition"/> オブジェクトが取得されます。
+        /// </remarks>
         public static CharPosition GetPositionByIndex(this string text, int index)
         {
             if (text == null)
@@ -98,7 +117,16 @@ namespace Lury.Compiling.Utils
         /// <param name="text">文字列。</param>
         /// <param name="index">指し示されるインデクス。</param>
         /// <param name="length">指し示される長さ。</param>
-        /// <param name="position">インデクスが指し示す位置。</param>
+        /// <param name="position">インデクスが指し示す位置を表す <see cref="CharPosition"/> オブジェクト。</param>
+        /// <exception cref="ArgumentNullException">パラメータ text が null です。</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// パラメータ index または length が 0 未満、
+        /// あるいは index と length の合計が text の長さより大きいです。
+        /// </exception>
+        /// <remarks>
+        /// 指定された文字列内を指し示すインデクスと長さを指定して、その範囲を指し示すような文字列の配列を取得します。
+        /// パラメータ position に、指し示された位置を表す <see cref="CharPosition"/> オブジェクトが格納されます。 
+        /// </remarks>
         public static string[] GeneratePointingStrings(this string text,
                                                        int index,
                                                        int length,
@@ -123,8 +151,16 @@ namespace Lury.Compiling.Utils
         /// </summary>
         /// <returns>指定された文字列と、行と列の位置を指し示した文字列の配列。</returns>
         /// <param name="text">文字列。</param>
-        /// <param name="position">指し示す行と列の位置。</param>
+        /// <param name="position">指し示す行と列の位置を表す <see cref="CharPosition"/> オブジェクト。</param>
         /// <param name="length">指し示される長さ。</param>
+        /// <exception cref="ArgumentNullException">パラメータ text が null です。</exception>
+        /// <exception cref="CharPosition">
+        /// パラメータ position が空の値、または length が 0 未満です。
+        /// </exception>
+        /// <remarks>
+        /// 指定された文字列内を指し示す <see cref="CharPosition"/> オブジェクトを指定して、
+        /// その範囲を指し示すような文字列の配列を取得します。
+        /// </remarks>
         public static string[] GeneratePointingStrings(this string text, CharPosition position, int length)
         {
             if (text == null)
@@ -159,9 +195,13 @@ namespace Lury.Compiling.Utils
         /// <summary>
         /// 指定された行の文字列を取得します。
         /// </summary>
-        /// <returns>一行の文字列。</returns>
+        /// <returns>指定された行の文字列。</returns>
         /// <param name="text">元となる文字列。</param>
-        /// <param name="line">取得する行。</param>
+        /// <param name="line">取得する行の 1 以上の番号。</param>
+        /// <exception cref="ArgumentNullException">パラメータ text が null です。</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// パラメータ line が 0 以下、または文字列の行数以上の値です。
+        /// </exception>
         public static string GetLine(this string text, int line)
         {
             if (text == null)
@@ -183,6 +223,7 @@ namespace Lury.Compiling.Utils
         /// 文字列に含まれる制御文字をバックスラッシュ付き文字に変換します。
         /// </summary>
         /// <param name="text">変換される文字列。</param>
+        /// <exception cref="ArgumentNullException">パラメータ text が null です。</exception>
         /// <returns>変換された制御文字を含む文字列。</returns>
         public static string ConvertControlChars(this string text)
         {

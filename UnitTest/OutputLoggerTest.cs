@@ -74,7 +74,7 @@ namespace UnitTest
 
             OutputLogger logger2 = new OutputLogger();
             logger1.CopyTo(logger2);
-            
+
             Assert.AreEqual(3, logger2.Outputs.Count());
             Assert.AreEqual(1, logger2.InfoOutputs.Count());
             Assert.AreEqual(1, logger2.WarnOutputs.Count());
@@ -83,7 +83,7 @@ namespace UnitTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void CopyToErrorTest()
+        public void CopyToError()
         {
             OutputLogger logger = new OutputLogger();
             logger.CopyTo(null);

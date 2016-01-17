@@ -46,7 +46,7 @@ namespace Lury.Compiling.Utils
         /// <summary>
         /// 該当箇所を表す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトを取得します。
         /// </summary>
-        public CharPosition Position { get; private set; }
+        public CharPosition CharPosition { get; private set; }
 
         /// <summary>
         /// 該当箇所の文字列の長さを表す 0 以上の整数値を取得します。
@@ -62,15 +62,15 @@ namespace Lury.Compiling.Utils
         /// 新しい <see cref="Lury.Compiling.Utils.CodePosition"/> クラスのインスタンスを初期化します。
         /// </summary>
         /// <param name="sourceName">ソースコードを識別するための名前。</param>
-        /// <param name="position">該当箇所を表す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
+        /// <param name="charPosition">該当箇所を表す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
         /// <param name="length">該当箇所の文字列の長さを表す 0 以上の整数値。</param>
-        public CodePosition(string sourceName, CharPosition position, int length)
+        public CodePosition(string sourceName, CharPosition charPosition, int length)
         {
             if (length < 0)
                 throw new ArgumentOutOfRangeException("length");
 
             this.SourceName = sourceName;
-            this.Position = position;
+            this.CharPosition = charPosition;
             this.Length = length;
         }
 
@@ -79,9 +79,9 @@ namespace Lury.Compiling.Utils
         /// 新しい <see cref="Lury.Compiling.Utils.CodePosition"/> クラスのインスタンスを初期化します。
         /// </summary>
         /// <param name="sourceName">ソースコードを識別するための名前。</param>
-        /// <param name="position">該当箇所を表す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
-        public CodePosition(string sourceName, CharPosition position)
-            : this(sourceName, position, 0)
+        /// <param name="charPosition">該当箇所を表す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</param>
+        public CodePosition(string sourceName, CharPosition charPosition)
+            : this(sourceName, charPosition, 0)
         {
         }
 
@@ -95,7 +95,7 @@ namespace Lury.Compiling.Utils
         /// <returns>現在のオブジェクトを説明する文字列。</returns>
         public override string ToString()
         {
-            return string.Format("{0}#{1}", this.Position, Path.GetFileName(this.SourceName));
+            return string.Format("{0}#{1}", this.CharPosition, Path.GetFileName(this.SourceName));
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Lury.Compiling.Utils
         /// <returns>現在の <see cref="Lury.Compiling.Utils.CodePosition"/> のハッシュ コード。</returns>
         public override int GetHashCode()
         {
-            return this.Position.GetHashCode() ^ this.Length.GetHashCode() ^ this.SourceName.GetHashCode();
+            return this.CharPosition.GetHashCode() ^ this.Length.GetHashCode() ^ this.SourceName.GetHashCode();
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Lury.Compiling.Utils
             if ((object)objA == null && (object)objB == null)
                 return true;
             else if ((object)objA != null && (object)objB != null)
-                return (objA.Position == objB.Position) &&
+                return (objA.CharPosition == objB.CharPosition) &&
                        (objA.Length == objB.Length) &&
                        (objA.SourceName == objB.SourceName);
             else

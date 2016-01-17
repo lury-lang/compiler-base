@@ -19,7 +19,7 @@ namespace UnitTest
             CodePosition codePos = new CodePosition(SourceName, pos, length);
 
             Assert.AreEqual(SourceName, codePos.SourceName);
-            Assert.AreEqual(pos, codePos.Position);
+            Assert.AreEqual(pos, codePos.CharPosition);
             Assert.AreEqual(length, codePos.Length);
         }
 
@@ -31,7 +31,7 @@ namespace UnitTest
             CodePosition codePos = new CodePosition(SourceName, pos);
 
             Assert.AreEqual(SourceName, codePos.SourceName);
-            Assert.AreEqual(pos, codePos.Position);
+            Assert.AreEqual(pos, codePos.CharPosition);
             Assert.AreEqual(0, codePos.Length);
         }
 

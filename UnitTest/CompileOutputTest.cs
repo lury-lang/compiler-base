@@ -44,7 +44,7 @@ namespace UnitTest
             Assert.AreEqual(number, output.OutputNumber);
             Assert.AreEqual(code, output.Code);
             Assert.AreEqual(sourceCode, output.SourceCode);
-            Assert.AreEqual(codePos, output.Position);
+            Assert.AreEqual(codePos, output.CodePosition);
             Assert.AreEqual(appendix, output.Appendix);
         }
 
@@ -66,7 +66,7 @@ namespace UnitTest
         public void PositionTest()
         {
             CompileOutput output = logger.Outputs.First();
-            Assert.AreEqual(codePos, output.Position);
+            Assert.AreEqual(codePos, output.CodePosition);
         }
 
         [TestMethod]

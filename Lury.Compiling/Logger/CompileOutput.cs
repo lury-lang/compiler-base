@@ -69,7 +69,7 @@ namespace Lury.Compiling.Logger
         /// ソースコード中の発生位置を取得します。
         /// </summary>
         /// <value>発生位置を表す <see cref="Lury.Compiling.Utils.CodePosition"/> 構造体。</value>
-        public CodePosition Position { get; private set; }
+        public CodePosition CodePosition { get; private set; }
 
         /// <summary>
         /// ソースコード中の該当するコードを取得します。
@@ -156,20 +156,20 @@ namespace Lury.Compiling.Logger
         /// <param name="number">出力メッセージ番号を表す整数値。</param>
         /// <param name="code">該当するコードを表す文字列。</param>
         /// <param name="sourceCode">ソースコードを表す文字列。</param>
-        /// <param name="position">発生位置を表す <see cref="Lury.Compiling.Utils.CodePosition"/> 構造体。</param>
+        /// <param name="codePosition">発生位置を表す <see cref="Lury.Compiling.Utils.CodePosition"/> 構造体。</param>
         /// <param name="appendix">付随メッセージを表す文字列。</param>
         internal CompileOutput(OutputCategory category,
                                int number,
                                string code = null,
                                string sourceCode = null,
-                               CodePosition position = null,
+                               CodePosition codePosition = null,
                                string appendix = null)
         {
             this.Category = category;
             this.OutputNumber = number;
             this.SourceCode = sourceCode;
             this.Code = code;
-            this.Position = position;
+            this.CodePosition = codePosition;
             this.Appendix = appendix;
         }
 

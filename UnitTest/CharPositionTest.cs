@@ -13,7 +13,7 @@ namespace UnitTest
         {
             CharPosition pos = new CharPosition(1, 5);
             Assert.AreEqual(1, pos.Line);
-            pos.Line = 3;
+            pos = new CharPosition(3, pos.Column);
             Assert.AreEqual(3, pos.Line);
         }
 
@@ -22,7 +22,7 @@ namespace UnitTest
         public void LineError()
         {
             CharPosition pos = new CharPosition(1, 5);
-            pos.Line = 0;
+            pos = new CharPosition(0, pos.Column);
         }
 
         [TestMethod]
@@ -30,7 +30,7 @@ namespace UnitTest
         {
             CharPosition pos = new CharPosition(1, 5);
             Assert.AreEqual(5, pos.Column);
-            pos.Column = 2;
+            pos = new CharPosition(pos.Line, 2);
             Assert.AreEqual(2, pos.Column);
         }
 
@@ -39,7 +39,7 @@ namespace UnitTest
         public void ColumnError()
         {
             CharPosition pos = new CharPosition(1, 5);
-            pos.Column = 0;
+            pos = new CharPosition(pos.Line, 0);
         }
 
         [TestMethod]

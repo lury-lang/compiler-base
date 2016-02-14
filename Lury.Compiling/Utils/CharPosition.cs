@@ -45,9 +45,9 @@ namespace Lury.Compiling.Utils
 
         #region -- Private Fields --
 
-        private int line;
+        private readonly int line;
 
-        private int column;
+        private readonly int column;
 
         #endregion
 
@@ -57,33 +57,13 @@ namespace Lury.Compiling.Utils
         /// 行位置を取得または設定します。
         /// </summary>
         /// <value>行を表す 1 以上の整数値。</value>
-        public int Line
-        { 
-            get { return this.line; }
-            set
-            { 
-                if (value < 1)
-                    throw new ArgumentOutOfRangeException(nameof(value));
-
-                this.line = value;
-            }
-        }
+        public int Line => this.line;
 
         /// <summary>
         /// 列位置を取得または設定します。
         /// </summary>
         /// <value>列を表す 1 以上の整数値。</value>
-        public int Column
-        { 
-            get { return this.column; }
-            set
-            { 
-                if (value < 1)
-                    throw new ArgumentOutOfRangeException(nameof(value));
-
-                this.column = value;
-            }
-        }
+        public int Column => this.column;
 
         /// <summary>
         /// この <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトが

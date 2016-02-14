@@ -99,11 +99,12 @@ namespace Lury.Compiling.Utils
                     break;
 
                 prevMatch = match;
-                position.Line++;
+                position = new CharPosition(position.Line + 1, position.Column);
             }
 
-            position.Column = (prevMatch == null) ? index + 1 :
-                     index - prevMatch.Index;
+            position = new CharPosition(position.Line,
+                     (prevMatch == null) ? index + 1 :
+                                           index - prevMatch.Index);
 
             return position;
         }

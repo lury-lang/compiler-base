@@ -50,34 +50,28 @@ namespace Lury.Compiling.Logger
         /// ロガーに格納された全てのコンパイル出力を列挙する列挙子を取得します。
         /// </summary>
         /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
-        public IEnumerable<CompileOutput> Outputs { get { return this.outputs; } }
+        public IEnumerable<CompileOutput> Outputs => this.outputs; 
 
         /// <summary>
         /// ロガーに格納された全てのエラーを列挙する列挙子を取得します。
         /// </summary>
         /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
         public IEnumerable<CompileOutput> ErrorOutputs
-        { 
-            get { return this.outputs.Where(o => o.Category == OutputCategory.Error); }
-        }
+            => this.outputs.Where(o => o.Category == OutputCategory.Error);
 
         /// <summary>
         /// ロガーに格納された全ての警告を列挙する列挙子を取得します。
         /// </summary>
         /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
         public IEnumerable<CompileOutput> WarnOutputs
-        { 
-            get { return this.outputs.Where(o => o.Category == OutputCategory.Warn); }
-        }
+            => this.outputs.Where(o => o.Category == OutputCategory.Warn);
 
         /// <summary>
         /// ロガーに格納された全ての情報を列挙する列挙子を取得します。
         /// </summary>
         /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
         public IEnumerable<CompileOutput> InfoOutputs
-        { 
-            get { return this.outputs.Where(o => o.Category == OutputCategory.Info); }
-        }
+            => this.outputs.Where(o => o.Category == OutputCategory.Info);
 
         #endregion
 
@@ -153,9 +147,7 @@ namespace Lury.Compiling.Logger
         /// 格納された全てのコンパイル出力を削除します。
         /// </summary>
         public void Clear()
-        {
-            this.outputs.Clear();
-        }
+            => this.outputs.Clear();
 
         /// <summary>
         /// コンパイル出力を別の <see cref="Lury.Compiling.Logger.OutputLogger"/> オブジェクトに
@@ -165,7 +157,7 @@ namespace Lury.Compiling.Logger
         public void CopyTo(OutputLogger otherLogger)
         {
             if (otherLogger == null)
-                throw new ArgumentNullException("otherLogger");
+                throw new ArgumentNullException(nameof(otherLogger));
 
             foreach (var output in this.outputs)
                 otherLogger.outputs.Add(output);

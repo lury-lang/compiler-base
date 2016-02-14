@@ -67,7 +67,7 @@ namespace Lury.Compiling.Utils
         public CodePosition(string sourceName, CharPosition charPosition, int length)
         {
             if (length < 0)
-                throw new ArgumentOutOfRangeException("length");
+                throw new ArgumentOutOfRangeException(nameof(length));
 
             this.SourceName = sourceName;
             this.CharPosition = charPosition;
@@ -95,7 +95,7 @@ namespace Lury.Compiling.Utils
         /// <returns>現在のオブジェクトを説明する文字列。</returns>
         public override string ToString()
         {
-            return string.Format("{0}#{1}", this.CharPosition, Path.GetFileName(this.SourceName));
+            return $"{this.CharPosition}#{Path.GetFileName(this.SourceName)}";
         }
 
         /// <summary>
@@ -116,9 +116,7 @@ namespace Lury.Compiling.Utils
         /// </summary>
         /// <returns>現在の <see cref="Lury.Compiling.Utils.CodePosition"/> のハッシュ コード。</returns>
         public override int GetHashCode()
-        {
-            return this.CharPosition.GetHashCode() ^ this.Length.GetHashCode() ^ this.SourceName.GetHashCode();
-        }
+            => this.CharPosition.GetHashCode() ^ this.Length.GetHashCode() ^ this.SourceName.GetHashCode();
 
         /// <summary>
         /// 指定されたインスタンスが等しいかどうかを判断します。
@@ -140,14 +138,10 @@ namespace Lury.Compiling.Utils
         }
 
         public static bool operator==(CodePosition objA, CodePosition objB)
-        {
-            return CodePosition.Equals(objA, objB);
-        }
+            => CodePosition.Equals(objA, objB);
 
         public static bool operator !=(CodePosition objA, CodePosition objB)
-        {
-            return !CodePosition.Equals(objA, objB);
-        }
+            => !CodePosition.Equals(objA, objB);
 
         #endregion
     }

@@ -64,9 +64,7 @@ namespace Lury.Compiling.Utils
         /// このメソッドは複数の改行文字種が混在していても集計を行います。
         /// </remarks>
         public static int GetNumberOfLine(this string text)
-        {
-            return (text == null) ? 0 : NewLine.Matches(text).Count + 1;
-        }
+            => (text == null) ? 0 : NewLine.Matches(text).Count + 1;
 
         /// <summary>
         /// 文字列の行と列の位置をインデクスから求めます。
@@ -87,10 +85,10 @@ namespace Lury.Compiling.Utils
         public static CharPosition GetPositionByIndex(this string text, int index)
         {
             if (text == null)
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
 
             if (index < 0 || index > text.Length + 1)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
 
             CharPosition position = CharPosition.BasePosition;
             Match prevMatch = null;
@@ -133,13 +131,13 @@ namespace Lury.Compiling.Utils
                                                        out CharPosition position)
         {
             if (text == null)
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
 
             if (index < 0 || index >= text.Length)
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
 
             if (length < 0 || index + length > text.Length)
-                throw new ArgumentOutOfRangeException("length");
+                throw new ArgumentOutOfRangeException(nameof(length));
 
             position = text.GetPositionByIndex(index);
 
@@ -164,13 +162,13 @@ namespace Lury.Compiling.Utils
         public static string[] GeneratePointingStrings(this string text, CharPosition position, int length)
         {
             if (text == null)
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
 
             if (position.IsEmpty)
-                throw new ArgumentOutOfRangeException("position");
+                throw new ArgumentOutOfRangeException(nameof(position));
 
             if (length < 0)
-                throw new ArgumentOutOfRangeException("length");
+                throw new ArgumentOutOfRangeException(nameof(length));
 
             if (length == 0)
                 length++;
@@ -183,7 +181,7 @@ namespace Lury.Compiling.Utils
             // issue #1: StringUtils#GeneratePointingStringsが空行でエラー
             // https://github.com/lury-lang/compiler-base/issues/1
             if (cursorLine.Length > 0 && cursorLine.Length < length)
-                throw new ArgumentOutOfRangeException("length");
+                throw new ArgumentOutOfRangeException(nameof(length));
 
             return new string[]
             {
@@ -205,13 +203,13 @@ namespace Lury.Compiling.Utils
         public static string GetLine(this string text, int line)
         {
             if (text == null)
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
 
             var matches = NewLine.Matches(text);
             line--;
 
             if (line < 0 || line > matches.Count)
-                throw new ArgumentOutOfRangeException("line");
+                throw new ArgumentOutOfRangeException(nameof(line));
 
             int lineIndex = (line == 0) ? 0 : matches[line - 1].Index + matches[line - 1].Length;
             int lineLength = ((line == matches.Count) ? text.Length : matches[line].Index) - lineIndex;
@@ -228,7 +226,7 @@ namespace Lury.Compiling.Utils
         public static string ConvertControlChars(this string text)
         {
             if (text == null)
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
 
             if (text.Length < 1024)
             {
@@ -270,10 +268,10 @@ namespace Lury.Compiling.Utils
         public static string ConvertFromEscapedString(this string text)
         {
             if (text == null)
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
 
             if (text.Length < 2)
-                throw new ArgumentException("text");
+                throw new ArgumentException(nameof(text));
 
             char marker = text[0];
 
@@ -293,7 +291,7 @@ namespace Lury.Compiling.Utils
         private static void TrimMarker(StringBuilder value, char marker)
         {
             if (value[0] != marker || value[value.Length - 1] != marker)
-                throw new ArgumentException("value");
+                throw new ArgumentException(nameof(value));
 
             value.Remove(0, 1);
             value.Remove(value.Length - 1, 1);
@@ -333,7 +331,7 @@ namespace Lury.Compiling.Utils
             int value = int.Parse(hex, NumberStyles.HexNumber);
 
             if (value < 0 || value > 0x10ffff)
-                throw new ArgumentException("hex");
+                throw new ArgumentException(nameof(hex));
 
             if (value <= 0x00ff)
                 return ((char)value).ToString();

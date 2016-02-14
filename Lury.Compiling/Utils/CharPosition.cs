@@ -63,7 +63,7 @@ namespace Lury.Compiling.Utils
             set
             { 
                 if (value < 1)
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 this.line = value;
             }
@@ -79,7 +79,7 @@ namespace Lury.Compiling.Utils
             set
             { 
                 if (value < 1)
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 this.column = value;
             }
@@ -90,10 +90,7 @@ namespace Lury.Compiling.Utils
         /// 空（どの位置も指し示さない）であるかの真偽値を取得します。
         /// </summary>
         /// <value>true のときこのオブジェクトは空、それ以外のとき false。</value>
-        public bool IsEmpty
-        {
-            get { return this == empty; }
-        }
+        public bool IsEmpty => this == empty; 
 
         #endregion
 
@@ -104,13 +101,13 @@ namespace Lury.Compiling.Utils
         /// 空の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトを取得します。
         /// </summary>
         /// <value>空の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</value>
-        public static CharPosition Empty { get { return empty; } }
+        public static CharPosition Empty => empty;
 
         /// <summary>
         /// 文字列の先頭を指し示す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトを取得します。
         /// </summary>
         /// <value>先頭を指し示す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</value>
-        public static CharPosition BasePosition { get { return basePosition; } }
+        public static CharPosition BasePosition => basePosition;
 
         #endregion
 
@@ -124,10 +121,10 @@ namespace Lury.Compiling.Utils
         public CharPosition(int line, int column)
         {
             if (line < 1)
-                throw new ArgumentOutOfRangeException("line");
+                throw new ArgumentOutOfRangeException(nameof(line));
 
             if (column < 1)
-                throw new ArgumentOutOfRangeException("column");
+                throw new ArgumentOutOfRangeException(nameof(column));
 
             this.line = line;
             this.column = column;
@@ -142,9 +139,7 @@ namespace Lury.Compiling.Utils
         /// </summary>
         /// <returns>このオブジェクトの状態を表す文字列。</returns>
         public override string ToString()
-        {
-            return string.Format("({0}, {1})", this.line, this.column);
-        }
+            => $"({this.line}, {this.column})";
 
         /// <summary>
         /// 2つのオブジェクトのインスタンスが等しいかどうかを判定します。
@@ -166,9 +161,7 @@ namespace Lury.Compiling.Utils
         /// </summary>
         /// <returns>このオブジェクトに対するハッシュ値を表した整数値。</returns>
         public override int GetHashCode()
-        {
-            return this.line ^ this.column;
-        }
+            => this.line ^ this.column;
 
         #endregion
 
@@ -181,9 +174,7 @@ namespace Lury.Compiling.Utils
         /// <param name="cp2">2つ目の <see cref="CharPosition"/> オブジェクト。</param>
         /// <returns>2つのオブジェクトが等価であるとき true、それ以外のとき false。</returns>
         public static bool operator ==(CharPosition cp1, CharPosition cp2)
-        {
-            return cp1.line == cp2.line && cp1.column == cp2.column;
-        }
+            => cp1.line == cp2.line && cp1.column == cp2.column;
 
         /// <summary>
         /// 2つの <see cref="CharPosition"/> オブジェクトが等価でないかを判定します。
@@ -192,9 +183,7 @@ namespace Lury.Compiling.Utils
         /// <param name="cp2">2つ目の <see cref="CharPosition"/> オブジェクト。</param>
         /// <returns>2つのオブジェクトが等価でないとき true、それ以外のとき false。</returns>
         public static bool operator !=(CharPosition cp1, CharPosition cp2)
-        {
-            return cp1.line != cp2.line || cp1.column != cp2.column;
-        }
+            => cp1.line != cp2.line || cp1.column != cp2.column;
 
         #endregion
     }

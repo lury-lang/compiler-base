@@ -37,9 +37,18 @@ namespace Lury.Compiling.Utils
     {
         #region -- Private Static Fields --
 
-        private static readonly CharPosition empty = default(CharPosition);
+        /// <summary>
+        /// 文字列中のどの位置も指し示さないような、
+        /// 空の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトです。
+        /// この変数は読み取り専用です。
+        /// </summary>
+        public static readonly CharPosition Empty = default(CharPosition);
 
-        private static readonly CharPosition basePosition = new CharPosition(1, 1);
+        /// <summary>
+        /// 文字列の先頭を指し示す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトです。
+        /// この変数は読み取り専用です。
+        /// </summary>
+        public static readonly CharPosition BasePosition = new CharPosition(1, 1);
 
         #endregion
 
@@ -70,27 +79,10 @@ namespace Lury.Compiling.Utils
         /// 空（どの位置も指し示さない）であるかの真偽値を取得します。
         /// </summary>
         /// <value>true のときこのオブジェクトは空、それ以外のとき false。</value>
-        public bool IsEmpty => this == empty; 
+        public bool IsEmpty => this == Empty; 
 
         #endregion
-
-        #region -- Public Static Properties --
-
-        /// <summary>
-        /// 文字列中のどの位置も指し示さないような、
-        /// 空の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトを取得します。
-        /// </summary>
-        /// <value>空の <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</value>
-        public static CharPosition Empty => empty;
-
-        /// <summary>
-        /// 文字列の先頭を指し示す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトを取得します。
-        /// </summary>
-        /// <value>先頭を指し示す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクト。</value>
-        public static CharPosition BasePosition => basePosition;
-
-        #endregion
-
+        
         #region -- Constructor --
 
         /// <summary>

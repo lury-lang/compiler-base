@@ -41,17 +41,17 @@ namespace Lury.Compiling.Utils
         /// <summary>
         /// ソースコードを識別するための名前を表す文字列を取得します。
         /// </summary>
-        public string SourceName { get; private set; }
+        public string SourceName { get; }
 
         /// <summary>
         /// 該当箇所を表す <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトを取得します。
         /// </summary>
-        public CharPosition CharPosition { get; private set; }
+        public CharPosition CharPosition { get; }
 
         /// <summary>
         /// 該当箇所の文字列の長さを表す 0 以上の整数値を取得します。
         /// </summary>
-        public int Length { get; private set; }
+        public int Length { get; }
 
         #endregion
 

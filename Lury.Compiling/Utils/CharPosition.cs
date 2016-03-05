@@ -52,37 +52,29 @@ namespace Lury.Compiling.Utils
 
         #endregion
 
-        #region -- Private Fields --
-
-        private readonly int line;
-
-        private readonly int column;
-
-        #endregion
-
         #region -- Public Properties --
 
         /// <summary>
         /// 行位置を取得または設定します。
         /// </summary>
         /// <value>行を表す 1 以上の整数値。</value>
-        public int Line => this.line;
+        public int Line { get; }
 
         /// <summary>
         /// 列位置を取得または設定します。
         /// </summary>
         /// <value>列を表す 1 以上の整数値。</value>
-        public int Column => this.column;
+        public int Column { get; }
 
         /// <summary>
         /// この <see cref="Lury.Compiling.Utils.CharPosition"/> オブジェクトが
         /// 空（どの位置も指し示さない）であるかの真偽値を取得します。
         /// </summary>
         /// <value>true のときこのオブジェクトは空、それ以外のとき false。</value>
-        public bool IsEmpty => this == Empty; 
+        public bool IsEmpty => this == Empty;
 
         #endregion
-        
+
         #region -- Constructor --
 
         /// <summary>
@@ -98,8 +90,8 @@ namespace Lury.Compiling.Utils
             if (column < 1)
                 throw new ArgumentOutOfRangeException(nameof(column));
 
-            this.line = line;
-            this.column = column;
+            this.Line = line;
+            this.Column = column;
         }
 
         #endregion
@@ -111,7 +103,7 @@ namespace Lury.Compiling.Utils
         /// </summary>
         /// <returns>このオブジェクトの状態を表す文字列。</returns>
         public override string ToString()
-            => $"({this.line}, {this.column})";
+            => $"({this.Line}, {this.Column})";
 
         /// <summary>
         /// 2つのオブジェクトのインスタンスが等しいかどうかを判定します。
@@ -125,7 +117,7 @@ namespace Lury.Compiling.Utils
 
             CharPosition x = (CharPosition)obj;
 
-            return (x.line == this.line) && (x.column == this.column);
+            return (x.Line == this.Line) && (x.Column == this.Column);
         }
 
         /// <summary>
@@ -133,7 +125,7 @@ namespace Lury.Compiling.Utils
         /// </summary>
         /// <returns>このオブジェクトに対するハッシュ値を表した整数値。</returns>
         public override int GetHashCode()
-            => this.line ^ this.column;
+            => this.Line ^ this.Column;
 
         #endregion
 
@@ -146,7 +138,7 @@ namespace Lury.Compiling.Utils
         /// <param name="cp2">2つ目の <see cref="CharPosition"/> オブジェクト。</param>
         /// <returns>2つのオブジェクトが等価であるとき true、それ以外のとき false。</returns>
         public static bool operator ==(CharPosition cp1, CharPosition cp2)
-            => cp1.line == cp2.line && cp1.column == cp2.column;
+            => cp1.Line == cp2.Line && cp1.Column == cp2.Column;
 
         /// <summary>
         /// 2つの <see cref="CharPosition"/> オブジェクトが等価でないかを判定します。
@@ -155,7 +147,7 @@ namespace Lury.Compiling.Utils
         /// <param name="cp2">2つ目の <see cref="CharPosition"/> オブジェクト。</param>
         /// <returns>2つのオブジェクトが等価でないとき true、それ以外のとき false。</returns>
         public static bool operator !=(CharPosition cp1, CharPosition cp2)
-            => cp1.line != cp2.line || cp1.column != cp2.column;
+            => cp1.Line != cp2.Line || cp1.Column != cp2.Column;
 
         #endregion
     }

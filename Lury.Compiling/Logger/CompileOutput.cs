@@ -57,37 +57,37 @@ namespace Lury.Compiling.Logger
         /// 出力メッセージの番号を取得します。
         /// </summary>
         /// <value>出力メッセージ番号を表す整数値。</value>
-        public int OutputNumber { get; private set; }
+        public int OutputNumber { get; }
 
         /// <summary>
         /// 出力メッセージのカテゴリを取得します。
         /// </summary>
         /// <value>カテゴリを表す <see cref="Lury.Compiling.Logger.OutputCategory"/> 列挙体。</value>
-        public OutputCategory Category { get; private set; }
+        public OutputCategory Category { get; }
 
         /// <summary>
         /// ソースコード中の発生位置を取得します。
         /// </summary>
         /// <value>発生位置を表す <see cref="Lury.Compiling.Utils.CodePosition"/> 構造体。</value>
-        public CodePosition CodePosition { get; private set; }
+        public CodePosition CodePosition { get; }
 
         /// <summary>
         /// ソースコード中の該当するコードを取得します。
         /// </summary>
         /// <value>該当するコードを表す文字列。</value>
-        public string Code { get; private set; }
+        public string Code { get; }
 
         /// <summary>
         /// コンパイル中のソースコードを取得します。
         /// </summary>
         /// <value>ソースコードを表す文字列。</value>
-        public string SourceCode { get; private set; }
+        public string SourceCode { get; }
 
         /// <summary>
         /// 出力メッセージに付随するメッセージを取得します。
         /// </summary>
         /// <value>付随メッセージを表す文字列。</value>
-        public string Appendix { get; private set; }
+        public string Appendix { get; }
 
         /// <summary>
         /// カテゴリと出力メッセージ番号に対応したメッセージを取得します。

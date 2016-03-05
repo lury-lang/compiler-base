@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Lury.Compiling.Logger;
 using Lury.Compiling.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -152,7 +152,7 @@ namespace Lury.Compiling.Logger
         /// 新しい <see cref="Lury.Compiling.Logger.CompileOutput"/> クラスのインスタンスを取得します。
         /// </summary>
         /// <param name="category">
-        ///     カテゴリを表す <see cref="Lury.Compiling.Logger.OutputCategoru"/> 列挙体。</param>
+        ///     カテゴリを表す <see cref="Lury.Compiling.Logger.OutputCategory"/> 列挙体。</param>
         /// <param name="number">出力メッセージ番号を表す整数値。</param>
         /// <param name="code">該当するコードを表す文字列。</param>
         /// <param name="sourceCode">ソースコードを表す文字列。</param>

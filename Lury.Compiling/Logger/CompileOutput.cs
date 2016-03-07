@@ -27,6 +27,7 @@
 // THE SOFTWARE.
 
 using System.Collections.Generic;
+using System.Linq;
 using Lury.Compiling.Utils;
 
 namespace Lury.Compiling.Logger
@@ -97,13 +98,10 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                string message;
-
-                foreach (var provider in providers)
-                    if (provider.GetMessage(this.OutputNumber, this.Category, out message))
-                        return message;
-
-                return null;
+                string message = null;
+                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+                providers.Any(p => p.GetMessage(this.OutputNumber, this.Category, out message));
+                return message;
             }
         }
 
@@ -115,13 +113,10 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                string suggestion;
-
-                foreach (var provider in providers)
-                    if (provider.GetSuggestion(this.OutputNumber, this.Category, out suggestion))
-                        return suggestion;
-
-                return null;
+                string suggestion = null;
+                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+                providers.Any(p => p.GetSuggestion(this.OutputNumber, this.Category, out suggestion));
+                return suggestion;
             }
         }
 
@@ -133,13 +128,10 @@ namespace Lury.Compiling.Logger
         {
             get
             {
-                string siteLink;
-
-                foreach (var provider in providers)
-                    if (provider.GetSiteLink(this.OutputNumber, this.Category, out siteLink))
-                        return siteLink;
-
-                return null;
+                string siteLink = null;
+                // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
+                providers.Any(p => p.GetSiteLink(this.OutputNumber, this.Category, out siteLink));
+                return siteLink;
             }
         }
 

@@ -17,7 +17,7 @@ namespace UnitTest
         private const int CodePosLength = 3;
         private static readonly CodePosition codePos = new CodePosition(SourceName, pos, CodePosLength);
 
-        private static OutputLogger logger = new OutputLogger();
+        private static readonly OutputLogger logger = new OutputLogger();
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)

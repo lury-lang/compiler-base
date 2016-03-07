@@ -8,26 +8,26 @@ namespace UnitTest
     [TestClass]
     public class CompileOutputTest
     {
-        private const int number = 0;
-        private const string code = "code";
-        private const string sourceCode = "source code";
+        private const int Number = 0;
+        private const string Code = "code";
+        private const string SourceCode = "source code";
         private static readonly CharPosition pos = new CharPosition(1, 8);
-        private const string appendix = "appendix";
-        private const string sourceName = "sourceName";
-        private const int codePosLength = 3;
-        private static readonly CodePosition codePos = new CodePosition(sourceName, pos, codePosLength);
+        private const string Appendix = "appendix";
+        private const string SourceName = "sourceName";
+        private const int CodePosLength = 3;
+        private static readonly CodePosition codePos = new CodePosition(SourceName, pos, CodePosLength);
 
         private static OutputLogger logger = new OutputLogger();
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            logger.ReportInfo(number, code, sourceCode, codePos, appendix);
-            logger.ReportWarn(1, code, sourceCode, codePos, appendix);
-            logger.ReportError(2, code, sourceCode, codePos, appendix);
-            logger.ReportInfo(3, code, sourceCode, codePos, appendix);
-            logger.ReportWarn(4, code, sourceCode, codePos, appendix);
-            logger.ReportError(5, code, sourceCode, codePos, appendix);
+            logger.ReportInfo(Number, Code, SourceCode, codePos, Appendix);
+            logger.ReportWarn(1, Code, SourceCode, codePos, Appendix);
+            logger.ReportError(2, Code, SourceCode, codePos, Appendix);
+            logger.ReportInfo(3, Code, SourceCode, codePos, Appendix);
+            logger.ReportWarn(4, Code, SourceCode, codePos, Appendix);
+            logger.ReportError(5, Code, SourceCode, codePos, Appendix);
 
             CompileOutput.MessageProviders.Add(new MessageProviderInfo());
             CompileOutput.MessageProviders.Add(new MessageProviderWarn());
@@ -40,18 +40,18 @@ namespace UnitTest
             CompileOutput output = logger.Outputs.First();
 
             Assert.AreEqual(OutputCategory.Info, output.Category);
-            Assert.AreEqual(number, output.OutputNumber);
-            Assert.AreEqual(code, output.Code);
-            Assert.AreEqual(sourceCode, output.SourceCode);
+            Assert.AreEqual(Number, output.OutputNumber);
+            Assert.AreEqual(Code, output.Code);
+            Assert.AreEqual(SourceCode, output.SourceCode);
             Assert.AreEqual(codePos, output.CodePosition);
-            Assert.AreEqual(appendix, output.Appendix);
+            Assert.AreEqual(Appendix, output.Appendix);
         }
 
         [TestMethod]
         public void OutputNumberTest()
         {
             CompileOutput output = logger.Outputs.First();
-            Assert.AreEqual(number, output.OutputNumber);
+            Assert.AreEqual(Number, output.OutputNumber);
         }
 
         [TestMethod]
@@ -72,21 +72,21 @@ namespace UnitTest
         public void CodeTest()
         {
             CompileOutput output = logger.Outputs.First();
-            Assert.AreEqual(code, output.Code);
+            Assert.AreEqual(Code, output.Code);
         }
 
         [TestMethod]
         public void SourceCodeTest()
         {
             CompileOutput output = logger.Outputs.First();
-            Assert.AreEqual(sourceCode, output.SourceCode);
+            Assert.AreEqual(SourceCode, output.SourceCode);
         }
 
         [TestMethod]
         public void AppendixTest()
         {
             CompileOutput output = logger.Outputs.First();
-            Assert.AreEqual(appendix, output.Appendix);
+            Assert.AreEqual(Appendix, output.Appendix);
         }
 
         [TestMethod]

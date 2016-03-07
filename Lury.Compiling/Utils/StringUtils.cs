@@ -43,10 +43,10 @@ namespace Lury.Compiling.Utils
     {
         #region -- Private Static Fields --
 
-        private static readonly Regex NewLine = new Regex(@"(?:\n|(?:\r\n)|\r|\u2028|\u2029)", RegexOptions.Compiled | RegexOptions.Singleline);
-        private static readonly Regex unicode_hex = new Regex(@"\\x[0-9A-Fa-f]{1,4}", RegexOptions.Compiled);
-        private static readonly Regex unicode_hex4 = new Regex(@"\\u[0-9A-Fa-f]{4}", RegexOptions.Compiled);
-        private static readonly Regex unicode_hex8 = new Regex(@"\\U[0-9A-Fa-f]{8}", RegexOptions.Compiled);
+        private static readonly Regex newLine = new Regex(@"(?:\n|(?:\r\n)|\r|\u2028|\u2029)", RegexOptions.Compiled | RegexOptions.Singleline);
+        private static readonly Regex unicodeHex = new Regex(@"\\x[0-9A-Fa-f]{1,4}", RegexOptions.Compiled);
+        private static readonly Regex unicodeHex4 = new Regex(@"\\u[0-9A-Fa-f]{4}", RegexOptions.Compiled);
+        private static readonly Regex unicodeHex8 = new Regex(@"\\U[0-9A-Fa-f]{8}", RegexOptions.Compiled);
 
         #endregion
 
@@ -64,7 +64,7 @@ namespace Lury.Compiling.Utils
         /// このメソッドは複数の改行文字種が混在していても集計を行います。
         /// </remarks>
         public static int GetNumberOfLine(this string text)
-            => (text == null) ? 0 : NewLine.Matches(text).Count + 1;
+            => (text == null) ? 0 : newLine.Matches(text).Count + 1;
 
         /// <summary>
         /// 文字列の行と列の位置をインデクスから求めます。
@@ -93,7 +93,7 @@ namespace Lury.Compiling.Utils
             CharPosition position = CharPosition.BasePosition;
             Match prevMatch = null;
 
-            foreach (Match match in NewLine.Matches(text))
+            foreach (Match match in newLine.Matches(text))
             {
                 if (match.Index >= index)
                     break;
@@ -206,7 +206,7 @@ namespace Lury.Compiling.Utils
             if (text == null)
                 throw new ArgumentNullException(nameof(text));
 
-            var matches = NewLine.Matches(text);
+            var matches = newLine.Matches(text);
             line--;
 
             if (line < 0 || line > matches.Count)
@@ -318,13 +318,13 @@ namespace Lury.Compiling.Utils
             // http://stackoverflow.com/questions/183907
 
             // type \xX - \xXXXX
-            value = unicode_hex.Replace(value, m => ((char)Int16.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
+            value = unicodeHex.Replace(value, m => ((char)Int16.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
 
             // type: \uXXXX
-            value = unicode_hex4.Replace(value, m => ((char)Int32.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
+            value = unicodeHex4.Replace(value, m => ((char)Int32.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
 
             // type: \UXXXXXXXX
-            value = unicode_hex8.Replace(value, m => ToUTF16(m.Value.Substring(2)));
+            value = unicodeHex8.Replace(value, m => ToUTF16(m.Value.Substring(2)));
         }
 
         private static string ToUTF16(string hex)

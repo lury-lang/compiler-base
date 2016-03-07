@@ -103,8 +103,7 @@ namespace Lury.Compiling.Utils
             }
 
             position = new CharPosition(position.Line,
-                     (prevMatch == null) ? index + 1 :
-                                           index - prevMatch.Index);
+                     index - prevMatch?.Index ?? index + 1);
 
             return position;
         }
@@ -184,7 +183,7 @@ namespace Lury.Compiling.Utils
             if (cursorLine.Length > 0 && cursorLine.Length < length)
                 throw new ArgumentOutOfRangeException(nameof(length));
 
-            return new string[]
+            return new[]
             {
                 cursorLine,
                 new string(' ', position.Column - 1) + new string('^', length)
@@ -344,7 +343,7 @@ namespace Lury.Compiling.Utils
                 int w = value - 0x10000;
                 char high = (char)(0xd800 | (w >> 10) & 0x03ff);
                 char low = (char)(0xdc00 | (w >> 0) & 0x03ff);
-                return new string(new char[2] { high, low });
+                return new string(new[] { high, low });
             }
         }
 

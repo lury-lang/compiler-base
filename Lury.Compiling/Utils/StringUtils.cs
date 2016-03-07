@@ -291,8 +291,11 @@ namespace Lury.Compiling.Utils
 
         private static void TrimMarker(StringBuilder value, char marker)
         {
-            if (value[0] != marker || value[value.Length - 1] != marker)
+            if (value[0] != value[value.Length - 1])
                 throw new ArgumentException(nameof(value));
+
+            if (value[0] != marker || value[value.Length - 1] != marker)
+                throw new ArgumentException(nameof(marker));
 
             value.Remove(0, 1);
             value.Remove(value.Length - 1, 1);

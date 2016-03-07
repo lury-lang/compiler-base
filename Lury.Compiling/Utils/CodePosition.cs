@@ -108,7 +108,7 @@ namespace Lury.Compiling.Utils
             if (!(obj is CodePosition))
                 return false;
             else
-                return CodePosition.Equals(this, (CodePosition)obj);
+                return Equals(this, (CodePosition)obj);
         }
 
         /// <summary>
@@ -138,10 +138,10 @@ namespace Lury.Compiling.Utils
         }
 
         public static bool operator==(CodePosition objA, CodePosition objB)
-            => CodePosition.Equals(objA, objB);
+            => Equals(objA, objB);
 
         public static bool operator !=(CodePosition objA, CodePosition objB)
-            => !CodePosition.Equals(objA, objB);
+            => !Equals(objA, objB);
 
         #endregion
     }

@@ -8,7 +8,7 @@ namespace UnitTest
     [TestClass]
     public class OutputLoggerTest
     {
-        private const int number = 0;
+        private const int Number = 0;
 
         [TestMethod]
         public void OutputsTest()
@@ -17,7 +17,7 @@ namespace UnitTest
             Assert.IsNotNull(logger.Outputs);
             Assert.IsFalse(logger.Outputs.Any());
 
-            logger.ReportInfo(number);
+            logger.ReportInfo(Number);
             Assert.AreEqual(1, logger.Outputs.Count());
         }
 
@@ -26,7 +26,7 @@ namespace UnitTest
         {
             OutputLogger logger = new OutputLogger();
 
-            logger.ReportInfo(number);
+            logger.ReportInfo(Number);
             Assert.AreEqual(1, logger.InfoOutputs.Count());
         }
 
@@ -35,7 +35,7 @@ namespace UnitTest
         {
             OutputLogger logger = new OutputLogger();
 
-            logger.ReportWarn(number);
+            logger.ReportWarn(Number);
             Assert.AreEqual(1, logger.WarnOutputs.Count());
         }
 
@@ -44,7 +44,7 @@ namespace UnitTest
         {
             OutputLogger logger = new OutputLogger();
 
-            logger.ReportError(number);
+            logger.ReportError(Number);
             Assert.AreEqual(1, logger.ErrorOutputs.Count());
         }
 
@@ -52,9 +52,9 @@ namespace UnitTest
         public void ClearTest()
         {
             OutputLogger logger = new OutputLogger();
-            logger.ReportInfo(number);
-            logger.ReportWarn(number);
-            logger.ReportError(number);
+            logger.ReportInfo(Number);
+            logger.ReportWarn(Number);
+            logger.ReportError(Number);
             Assert.AreEqual(3, logger.Outputs.Count());
 
             logger.Clear();
@@ -68,9 +68,9 @@ namespace UnitTest
         public void CopyToTest()
         {
             OutputLogger logger1 = new OutputLogger();
-            logger1.ReportInfo(number);
-            logger1.ReportWarn(number);
-            logger1.ReportError(number);
+            logger1.ReportInfo(Number);
+            logger1.ReportWarn(Number);
+            logger1.ReportError(Number);
 
             OutputLogger logger2 = new OutputLogger();
             logger1.CopyTo(logger2);

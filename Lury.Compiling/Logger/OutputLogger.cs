@@ -50,28 +50,28 @@ namespace Lury.Compiling.Logger
         /// ロガーに格納された全てのコンパイル出力を列挙する列挙子を取得します。
         /// </summary>
         /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
-        public IEnumerable<CompileOutput> Outputs => this.outputs; 
+        public IEnumerable<CompileOutput> Outputs => outputs; 
 
         /// <summary>
         /// ロガーに格納された全てのエラーを列挙する列挙子を取得します。
         /// </summary>
         /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
         public IEnumerable<CompileOutput> ErrorOutputs
-            => this.outputs.Where(o => o.Category == OutputCategory.Error);
+            => outputs.Where(o => o.Category == OutputCategory.Error);
 
         /// <summary>
         /// ロガーに格納された全ての警告を列挙する列挙子を取得します。
         /// </summary>
         /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
         public IEnumerable<CompileOutput> WarnOutputs
-            => this.outputs.Where(o => o.Category == OutputCategory.Warn);
+            => outputs.Where(o => o.Category == OutputCategory.Warn);
 
         /// <summary>
         /// ロガーに格納された全ての情報を列挙する列挙子を取得します。
         /// </summary>
         /// <value><see cref="Lury.Compiling.Logger.CompileOutput"/> を列挙する列挙子。</value>
         public IEnumerable<CompileOutput> InfoOutputs
-            => this.outputs.Where(o => o.Category == OutputCategory.Info);
+            => outputs.Where(o => o.Category == OutputCategory.Info);
 
         #endregion
 
@@ -82,7 +82,7 @@ namespace Lury.Compiling.Logger
         /// </summary>
         public OutputLogger()
         {
-            this.outputs = new List<CompileOutput>();
+            outputs = new List<CompileOutput>();
         }
 
         #endregion
@@ -104,7 +104,7 @@ namespace Lury.Compiling.Logger
                           string appendix = null)
             where T : IConvertible
         {
-            this.outputs.Add(new CompileOutput(OutputCategory.Error, number.ToInt32(null), code, sourceCode, position, appendix));
+            outputs.Add(new CompileOutput(OutputCategory.Error, number.ToInt32(null), code, sourceCode, position, appendix));
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Lury.Compiling.Logger
                           string appendix = null)
             where T : IConvertible
         {
-            this.outputs.Add(new CompileOutput(OutputCategory.Warn, number.ToInt32(null), code, sourceCode, position, appendix));
+            outputs.Add(new CompileOutput(OutputCategory.Warn, number.ToInt32(null), code, sourceCode, position, appendix));
         }
 
         /// <summary>
@@ -140,14 +140,14 @@ namespace Lury.Compiling.Logger
                           string appendix = null)
             where T : IConvertible
         {
-            this.outputs.Add(new CompileOutput(OutputCategory.Info, number.ToInt32(null), code, sourceCode, position, appendix));
+            outputs.Add(new CompileOutput(OutputCategory.Info, number.ToInt32(null), code, sourceCode, position, appendix));
         }
 
         /// <summary>
         /// 格納された全てのコンパイル出力を削除します。
         /// </summary>
         public void Clear()
-            => this.outputs.Clear();
+            => outputs.Clear();
 
         /// <summary>
         /// コンパイル出力を別の <see cref="Lury.Compiling.Logger.OutputLogger"/> オブジェクトに
@@ -159,7 +159,7 @@ namespace Lury.Compiling.Logger
             if (otherLogger == null)
                 throw new ArgumentNullException(nameof(otherLogger));
 
-            foreach (var output in this.outputs)
+            foreach (var output in outputs)
                 otherLogger.outputs.Add(output);
         }
 

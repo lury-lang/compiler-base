@@ -28,6 +28,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -43,10 +44,10 @@ namespace Lury.Compiling.Utils
     {
         #region -- Private Static Fields --
 
-        private static readonly Regex newLine = new Regex(@"(?:\n|(?:\r\n)|\r|\u2028|\u2029)", RegexOptions.Compiled | RegexOptions.Singleline);
-        private static readonly Regex unicodeHex = new Regex(@"\\x[0-9A-Fa-f]{1,4}", RegexOptions.Compiled);
-        private static readonly Regex unicodeHex4 = new Regex(@"\\u[0-9A-Fa-f]{4}", RegexOptions.Compiled);
-        private static readonly Regex unicodeHex8 = new Regex(@"\\U[0-9A-Fa-f]{8}", RegexOptions.Compiled);
+        private static readonly Regex NewLine = new Regex(@"(?:\n|(?:\r\n)|\r|\u2028|\u2029)", RegexOptions.Compiled | RegexOptions.Singleline);
+        private static readonly Regex UnicodeHex = new Regex(@"\\x[0-9A-Fa-f]{1,4}", RegexOptions.Compiled);
+        private static readonly Regex UnicodeHex4 = new Regex(@"\\u[0-9A-Fa-f]{4}", RegexOptions.Compiled);
+        private static readonly Regex UnicodeHex8 = new Regex(@"\\U[0-9A-Fa-f]{8}", RegexOptions.Compiled);
 
         #endregion
 
@@ -64,7 +65,7 @@ namespace Lury.Compiling.Utils
         /// このメソッドは複数の改行文字種が混在していても集計を行います。
         /// </remarks>
         public static int GetNumberOfLine(this string text)
-            => (text == null) ? 0 : newLine.Matches(text).Count + 1;
+            => (text == null) ? 0 : NewLine.Matches(text).Count + 1;
 
         /// <summary>
         /// 文字列の行と列の位置をインデクスから求めます。
@@ -90,14 +91,11 @@ namespace Lury.Compiling.Utils
             if (index < 0 || index > text.Length + 1)
                 throw new ArgumentOutOfRangeException(nameof(index));
 
-            CharPosition position = CharPosition.BasePosition;
+            var position = CharPosition.BasePosition;
             Match prevMatch = null;
 
-            foreach (Match match in newLine.Matches(text))
+            foreach (var match in NewLine.Matches(text).Cast<Match>().TakeWhile(match => match.Index < index))
             {
-                if (match.Index >= index)
-                    break;
-
                 prevMatch = match;
                 position = new CharPosition(position.Line + 1, position.Column);
             }
@@ -173,7 +171,7 @@ namespace Lury.Compiling.Utils
             if (length == 0)
                 length++;
 
-            string cursorLine = text.GetLine(position.Line)
+            var cursorLine = text.GetLine(position.Line)
                 .Replace('\t', ' ')
                 .Replace('\r', ' ')
                 .Replace('\n', ' ');
@@ -205,14 +203,14 @@ namespace Lury.Compiling.Utils
             if (text == null)
                 throw new ArgumentNullException(nameof(text));
 
-            var matches = newLine.Matches(text);
+            var matches = NewLine.Matches(text);
             line--;
 
             if (line < 0 || line > matches.Count)
                 throw new ArgumentOutOfRangeException(nameof(line));
 
-            int lineIndex = (line == 0) ? 0 : matches[line - 1].Index + matches[line - 1].Length;
-            int lineLength = ((line == matches.Count) ? text.Length : matches[line].Index) - lineIndex;
+            var lineIndex = (line == 0) ? 0 : matches[line - 1].Index + matches[line - 1].Length;
+            var lineLength = ((line == matches.Count) ? text.Length : matches[line].Index) - lineIndex;
 
             return text.Substring(lineIndex, lineLength);
         }
@@ -242,22 +240,19 @@ namespace Lury.Compiling.Utils
                            .Replace("\f", "\\f")
                            .Replace("\v", "\\v");
             }
-            else
-            {
-                return new StringBuilder(text, text.Length * 2)
-                    .Replace("\\", "\\\\")
-                    .Replace("\r", "\\r")
-                    .Replace("\n", "\\n")
-                    .Replace("\t", "\\t")
-                    .Replace("\'", "\\'")
-                    .Replace("\"", "\\\"")
-                    .Replace("\0", "\\0")
-                    .Replace("\a", "\\a")
-                    .Replace("\b", "\\b")
-                    .Replace("\f", "\\f")
-                    .Replace("\v", "\\v")
-                    .ToString();
-            }
+            return new StringBuilder(text, text.Length * 2)
+                .Replace("\\", "\\\\")
+                .Replace("\r", "\\r")
+                .Replace("\n", "\\n")
+                .Replace("\t", "\\t")
+                .Replace("\'", "\\'")
+                .Replace("\"", "\\\"")
+                .Replace("\0", "\\0")
+                .Replace("\a", "\\a")
+                .Replace("\b", "\\b")
+                .Replace("\f", "\\f")
+                .Replace("\v", "\\v")
+                .ToString();
         }
         
         /// <summary>
@@ -273,7 +268,7 @@ namespace Lury.Compiling.Utils
             if (text.Length < 2)
                 throw new ArgumentException(nameof(text));
 
-            char marker = text[0];
+            var marker = text[0];
 
             ReplaceUnicodeChar(ref text);
 
@@ -320,31 +315,28 @@ namespace Lury.Compiling.Utils
             // http://stackoverflow.com/questions/183907
 
             // type \xX - \xXXXX
-            value = unicodeHex.Replace(value, m => ((char)Int16.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
+            value = UnicodeHex.Replace(value, m => ((char)Int16.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
 
             // type: \uXXXX
-            value = unicodeHex4.Replace(value, m => ((char)Int32.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
+            value = UnicodeHex4.Replace(value, m => ((char)Int32.Parse(m.Value.Substring(2), NumberStyles.HexNumber)).ToString());
 
             // type: \UXXXXXXXX
-            value = unicodeHex8.Replace(value, m => ToUTF16(m.Value.Substring(2)));
+            value = UnicodeHex8.Replace(value, m => ToUtf16(m.Value.Substring(2)));
         }
 
-        private static string ToUTF16(string hex)
+        private static string ToUtf16(string hex)
         {
-            int value = int.Parse(hex, NumberStyles.HexNumber);
+            var value = int.Parse(hex, NumberStyles.HexNumber);
 
             if (value < 0 || value > 0x10ffff)
                 throw new ArgumentException(nameof(hex));
 
             if (value <= 0x00ff)
                 return ((char)value).ToString();
-            else
-            {
-                int w = value - 0x10000;
-                char high = (char)(0xd800 | (w >> 10) & 0x03ff);
-                char low = (char)(0xdc00 | (w >> 0) & 0x03ff);
-                return new string(new[] { high, low });
-            }
+            var w = value - 0x10000;
+            var high = (char)(0xd800 | (w >> 10) & 0x03ff);
+            var low = (char)(0xdc00 | (w >> 0) & 0x03ff);
+            return new string(new[] { high, low });
         }
 
         #endregion

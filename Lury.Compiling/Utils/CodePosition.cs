@@ -69,9 +69,9 @@ namespace Lury.Compiling.Utils
             if (length < 0)
                 throw new ArgumentOutOfRangeException(nameof(length));
 
-            this.SourceName = sourceName;
-            this.CharPosition = charPosition;
-            this.Length = length;
+            SourceName = sourceName;
+            CharPosition = charPosition;
+            Length = length;
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Lury.Compiling.Utils
         /// <returns>現在のオブジェクトを説明する文字列。</returns>
         public override string ToString()
         {
-            return $"{this.CharPosition}#{Path.GetFileName(this.SourceName)}";
+            return $"{CharPosition}#{Path.GetFileName(SourceName)}";
         }
 
         /// <summary>
@@ -107,8 +107,8 @@ namespace Lury.Compiling.Utils
         {
             if (!(obj is CodePosition))
                 return false;
-            else
-                return Equals(this, (CodePosition)obj);
+
+            return Equals(this, (CodePosition)obj);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Lury.Compiling.Utils
         /// </summary>
         /// <returns>現在の <see cref="Lury.Compiling.Utils.CodePosition"/> のハッシュ コード。</returns>
         public override int GetHashCode()
-            => this.CharPosition.GetHashCode() ^ this.Length.GetHashCode() ^ this.SourceName.GetHashCode();
+            => CharPosition.GetHashCode() ^ Length.GetHashCode() ^ SourceName.GetHashCode();
 
         /// <summary>
         /// 指定されたインスタンスが等しいかどうかを判断します。
@@ -129,12 +129,13 @@ namespace Lury.Compiling.Utils
         {
             if ((object)objA == null && (object)objB == null)
                 return true;
-            else if ((object)objA != null && (object)objB != null)
+
+            if ((object)objA != null && (object)objB != null)
                 return (objA.CharPosition == objB.CharPosition) &&
                        (objA.Length == objB.Length) &&
                        (objA.SourceName == objB.SourceName);
-            else
-                return false;
+
+            return false;
         }
 
         public static bool operator==(CodePosition objA, CodePosition objB)

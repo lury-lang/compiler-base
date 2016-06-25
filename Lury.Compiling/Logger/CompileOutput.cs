@@ -39,7 +39,7 @@ namespace Lury.Compiling.Logger
     {
         #region -- Private Static Fields --
 
-        private static readonly List<IMessageProvider> providers = new List<IMessageProvider>();
+        private static readonly List<IMessageProvider> Providers = new List<IMessageProvider>();
 
         #endregion
 
@@ -48,7 +48,7 @@ namespace Lury.Compiling.Logger
         /// <summary>
         /// メッセージプロバイダが格納されたコレクションを取得します。
         /// </summary>
-        public static ICollection<IMessageProvider> MessageProviders => providers;
+        public static ICollection<IMessageProvider> MessageProviders => Providers;
 
         #endregion
 
@@ -100,7 +100,7 @@ namespace Lury.Compiling.Logger
             {
                 string message = null;
                 // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-                providers.Any(p => p.GetMessage(this.OutputNumber, this.Category, out message));
+                Providers.Any(p => p.GetMessage(OutputNumber, Category, out message));
                 return message;
             }
         }
@@ -115,7 +115,7 @@ namespace Lury.Compiling.Logger
             {
                 string suggestion = null;
                 // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-                providers.Any(p => p.GetSuggestion(this.OutputNumber, this.Category, out suggestion));
+                Providers.Any(p => p.GetSuggestion(OutputNumber, Category, out suggestion));
                 return suggestion;
             }
         }
@@ -130,7 +130,7 @@ namespace Lury.Compiling.Logger
             {
                 string siteLink = null;
                 // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-                providers.Any(p => p.GetSiteLink(this.OutputNumber, this.Category, out siteLink));
+                Providers.Any(p => p.GetSiteLink(OutputNumber, Category, out siteLink));
                 return siteLink;
             }
         }
@@ -157,12 +157,12 @@ namespace Lury.Compiling.Logger
                                CodePosition codePosition = null,
                                string appendix = null)
         {
-            this.Category = category;
-            this.OutputNumber = number;
-            this.SourceCode = sourceCode;
-            this.Code = code;
-            this.CodePosition = codePosition;
-            this.Appendix = appendix;
+            Category = category;
+            OutputNumber = number;
+            SourceCode = sourceCode;
+            Code = code;
+            CodePosition = codePosition;
+            Appendix = appendix;
         }
 
         #endregion

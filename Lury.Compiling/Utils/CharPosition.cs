@@ -90,8 +90,8 @@ namespace Lury.Compiling.Utils
             if (column < 1)
                 throw new ArgumentOutOfRangeException(nameof(column));
 
-            this.Line = line;
-            this.Column = column;
+            Line = line;
+            Column = column;
         }
 
         #endregion
@@ -103,7 +103,7 @@ namespace Lury.Compiling.Utils
         /// </summary>
         /// <returns>このオブジェクトの状態を表す文字列。</returns>
         public override string ToString()
-            => $"({this.Line}, {this.Column})";
+            => $"({Line}, {Column})";
 
         /// <summary>
         /// 2つのオブジェクトのインスタンスが等しいかどうかを判定します。
@@ -115,9 +115,9 @@ namespace Lury.Compiling.Utils
             if (!(obj is CharPosition))
                 return false;
 
-            CharPosition x = (CharPosition)obj;
+            var x = (CharPosition)obj;
 
-            return (x.Line == this.Line) && (x.Column == this.Column);
+            return (x.Line == Line) && (x.Column == Column);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Lury.Compiling.Utils
         /// </summary>
         /// <returns>このオブジェクトに対するハッシュ値を表した整数値。</returns>
         public override int GetHashCode()
-            => this.Line ^ this.Column;
+            => Line ^ Column;
 
         #endregion
 

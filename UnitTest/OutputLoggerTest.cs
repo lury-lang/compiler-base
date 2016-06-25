@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Linq;
 using Lury.Compiling.Logger;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace UnitTest
 {
-    [TestClass]
+    [TestFixture]
     public class OutputLoggerTest
     {
         private const int Number = 0;
 
-        [TestMethod]
+        [Test]
         public void OutputsTest()
         {
-            OutputLogger logger = new OutputLogger();
+            var logger = new OutputLogger();
             Assert.IsNotNull(logger.Outputs);
             Assert.IsFalse(logger.Outputs.Any());
 
@@ -21,37 +21,37 @@ namespace UnitTest
             Assert.AreEqual(1, logger.Outputs.Count());
         }
 
-        [TestMethod]
+        [Test]
         public void InfoOutputsTest()
         {
-            OutputLogger logger = new OutputLogger();
+            var logger = new OutputLogger();
 
             logger.ReportInfo(Number);
             Assert.AreEqual(1, logger.InfoOutputs.Count());
         }
 
-        [TestMethod]
+        [Test]
         public void WarnOutputsTest()
         {
-            OutputLogger logger = new OutputLogger();
+            var logger = new OutputLogger();
 
             logger.ReportWarn(Number);
             Assert.AreEqual(1, logger.WarnOutputs.Count());
         }
 
-        [TestMethod]
+        [Test]
         public void ErrorOutputsTest()
         {
-            OutputLogger logger = new OutputLogger();
+            var logger = new OutputLogger();
 
             logger.ReportError(Number);
             Assert.AreEqual(1, logger.ErrorOutputs.Count());
         }
 
-        [TestMethod]
+        [Test]
         public void ClearTest()
         {
-            OutputLogger logger = new OutputLogger();
+            var logger = new OutputLogger();
             logger.ReportInfo(Number);
             logger.ReportWarn(Number);
             logger.ReportError(Number);
@@ -64,15 +64,15 @@ namespace UnitTest
             Assert.AreEqual(0, logger.Outputs.Count());
         }
 
-        [TestMethod]
+        [Test]
         public void CopyToTest()
         {
-            OutputLogger logger1 = new OutputLogger();
+            var logger1 = new OutputLogger();
             logger1.ReportInfo(Number);
             logger1.ReportWarn(Number);
             logger1.ReportError(Number);
 
-            OutputLogger logger2 = new OutputLogger();
+            var logger2 = new OutputLogger();
             logger1.CopyTo(logger2);
 
             Assert.AreEqual(3, logger2.Outputs.Count());
@@ -81,12 +81,11 @@ namespace UnitTest
             Assert.AreEqual(1, logger2.ErrorOutputs.Count());
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void CopyToError()
         {
-            OutputLogger logger = new OutputLogger();
-            logger.CopyTo(null);
+            var logger = new OutputLogger();
+            Assert.Throws<ArgumentNullException>(() => logger.CopyTo(null));
         }
     }
 }

@@ -1,64 +1,54 @@
 ﻿using System;
 using System.Linq;
 using Lury.Compiling.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace UnitTest
 {
-    [TestClass]
+    [TestFixture]
     public class StringUtilsTest
     {
-        [TestMethod]
-        public void GetNumberOfLineTest()
+        [Test]
+        [TestCase(null, 0)]
+        [TestCase("", 1)]
+        [TestCase("\0", 1)]
+        [TestCase("abc123", 1)]
+        [TestCase("\r", 2)]
+        [TestCase("\n", 2)]
+        [TestCase("\r\n", 2)]
+        [TestCase("\u2028", 2)]
+        [TestCase("\u2089", 2)]
+        [TestCase("\n\r", 3)]
+        public void GetNumberOfLineTest(string text, int line)
         {
-            Assert.AreEqual(0, StringUtils.GetNumberOfLine(null));
-            Assert.AreEqual(1, String.Empty.GetNumberOfLine());
-            Assert.AreEqual(1, "\0".GetNumberOfLine());
-            Assert.AreEqual(1, "abc123".GetNumberOfLine());
-            Assert.AreEqual(2, "\r".GetNumberOfLine());
-            Assert.AreEqual(2, "\n".GetNumberOfLine());
-            Assert.AreEqual(2, "\r\n".GetNumberOfLine());
-            Assert.AreEqual(2, "\u2028".GetNumberOfLine());
-            Assert.AreEqual(2, "\u2029".GetNumberOfLine());
-            Assert.AreEqual(3, "\n\r".GetNumberOfLine());
+            Assert.AreEqual(line, text.GetNumberOfLine());
         }
 
-        [TestMethod]
-        public void GetPositionByIndexTest()
+        [Test]
+        [TestCase("", 0, 1, 1)]
+        [TestCase("abc123", 0, 1, 1)]
+        [TestCase("abc123", 3, 1, 4)]
+        [TestCase("ab\nc123", 3, 2, 1)]
+        [TestCase("ab\r\nc123", 3, 2, 1)]
+        [TestCase("abc123", 6, 1, 7)]
+        [TestCase("abc\n123", 6, 2, 3)]
+        [TestCase("abc\n123", 7, 2, 4)]
+        [TestCase("abc\n123\n456", 6, 2, 3)]
+        public void GetPositionByIndexTest(string text, int index, int line, int column)
         {
-            Assert.AreEqual(CharPosition.BasePosition, String.Empty.GetPositionByIndex(0));
-            Assert.AreEqual(CharPosition.BasePosition, "abc123".GetPositionByIndex(0));
-            Assert.AreEqual(new CharPosition(1, 4), "abc123".GetPositionByIndex(3));
-            Assert.AreEqual(new CharPosition(2, 1), "ab\nc123".GetPositionByIndex(3));
-            Assert.AreEqual(new CharPosition(2, 1), "ab\r\nc123".GetPositionByIndex(3));
-            Assert.AreEqual(new CharPosition(1, 7), "abc123".GetPositionByIndex(6));
-            Assert.AreEqual(new CharPosition(2, 3), "abc\n123".GetPositionByIndex(6));
-            Assert.AreEqual(new CharPosition(2, 4), "abc\n123".GetPositionByIndex(7));
-            Assert.AreEqual(new CharPosition(2, 3), "abc\n123\n456".GetPositionByIndex(6));
+            Assert.AreEqual(new CharPosition(line, column), text.GetPositionByIndex(index));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void GetPositionByIndexError1()
+        [Test]
+        [TestCase(null, 0)]
+        [TestCase("test", -1)]
+        [TestCase("test", 6)]
+        public void GetPositionByIndexError(string text, int index)
         {
-            StringUtils.GetPositionByIndex(null, 0);
+            Assert.Throws<ArgumentNullException>(() => text.GetPositionByIndex(index));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void GetPositionByIndexError2()
-        {
-            "text".GetPositionByIndex(-1);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void GetPositionByIndexError3()
-        {
-            "text".GetPositionByIndex(6);
-        }
-
-        [TestMethod]
+        [Test]
         public void GeneratePointingStrings1Test()
         {
             const string source = "abc";
@@ -71,51 +61,26 @@ namespace UnitTest
             StringAssert.Contains(strs[0], source);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void GeneratePointingStrings1Error1()
+        [Test]
+        [TestCase(1, 2)]
+        public void GeneratePointingStrings1Error1(int index, int length)
         {
             CharPosition pos;
-            StringUtils.GeneratePointingStrings(null, 1, 2, out pos);
+            Assert.Throws<ArgumentNullException>(() => StringUtils.GeneratePointingStrings(null, index, length, out pos));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void GeneratePointingStrings1Error2()
+        [Test]
+        [TestCase("abc", -1, 2)]
+        [TestCase("abc", 3, 1)]
+        [TestCase("abc", 0, -1)]
+        [TestCase("abc", 0, 4)]
+        public void GeneratePointingStrings1Error2(string text, int index, int length)
         {
-            const string source = "abc";
             CharPosition pos;
-            source.GeneratePointingStrings(-1, 2, out pos);
+            Assert.Throws<ArgumentOutOfRangeException>(() => text.GeneratePointingStrings(index, length, out pos));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void GeneratePointingStrings1Error3()
-        {
-            const string source = "abc";
-            CharPosition pos;
-            source.GeneratePointingStrings(3, 1, out pos);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void GeneratePointingStrings1Error4()
-        {
-            const string source = "abc";
-            CharPosition pos;
-            source.GeneratePointingStrings(0, -1, out pos);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void GeneratePointingStrings1Error5()
-        {
-            const string source = "abc";
-            CharPosition pos;
-            source.GeneratePointingStrings(0, 4, out pos);
-        }
-
-        [TestMethod]
+        [Test]
         public void GeneratePointingStrings2Test()
         {
             const string source = "abc";
@@ -126,7 +91,7 @@ namespace UnitTest
             StringAssert.Contains(strs[0], source);
         }
 
-        [TestMethod]
+        [Test]
         public void GeneratePointingStrings3Test()
         {
             const string source = "abc\n";
@@ -136,7 +101,7 @@ namespace UnitTest
             Assert.AreEqual(2, strs.Length);
         }
 
-        [TestMethod]
+        [Test]
         public void GeneratePointingStrings4Test()
         {
             const string source = "abc\n";
@@ -146,71 +111,56 @@ namespace UnitTest
             Assert.AreEqual(2, strs.Length);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void GeneratePointingStrings2Error1()
+        [Test]
+        [TestCase(1, 2, 2)]
+        public void GeneratePointingStrings2Error1(int line, int column, int length)
         {
-            StringUtils.GeneratePointingStrings(null, new CharPosition(1, 2), 2);
+            var charPosition = new CharPosition(line, column);
+
+            Assert.Throws<ArgumentNullException>(() => StringUtils.GeneratePointingStrings(null, charPosition, length));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void GeneratePointingStrings2Error2()
+        [Test]
+        [TestCase("abc", 0, 0, 2)]
+        [TestCase("abc", 1, 1, -1)]
+        [TestCase("abc", 1, 1, 4)]
+        public void GeneratePointingStrings2Error2(string text, int line, int column, int length)
         {
-            const string source = "abc";
-            source.GeneratePointingStrings(CharPosition.Empty, 2);
+            var charPosition = (line == 0 && column == 0)
+                                ? CharPosition.Empty
+                                : new CharPosition(line, column);
+
+            Assert.Throws<ArgumentOutOfRangeException>(() => text.GeneratePointingStrings(charPosition, length));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void GeneratePointingStrings2Error3()
+        [Test]
+        [TestCase("", 1, "")]
+        [TestCase("123", 1, "123")]
+        [TestCase("123\n", 1, "123")]
+        [TestCase("123\n", 2, "")]
+        [TestCase("123\n\n456", 1, "123")]
+        [TestCase("123\n\n456", 2, "")]
+        [TestCase("123\n\n456", 3, "456")]
+        public void GetLineTest(string input, int line, string output)
         {
-            const string source = "abc";
-            source.GeneratePointingStrings(CharPosition.BasePosition, -1);
+            Assert.AreEqual(output, input.GetLine(line));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void GeneratePointingStrings2Error4()
-        {
-            const string source = "abc";
-            source.GeneratePointingStrings(CharPosition.BasePosition, 4);
-        }
-
-        [TestMethod]
-        public void GetLineTest()
-        {
-            Assert.AreEqual(string.Empty, string.Empty.GetLine(1));
-            Assert.AreEqual("123", "123".GetLine(1));
-            Assert.AreEqual("123", "123\n".GetLine(1));
-            Assert.AreEqual(string.Empty, "123\n".GetLine(2));
-            Assert.AreEqual("123", "123\n\n456".GetLine(1));
-            Assert.AreEqual(string.Empty, "123\n\n456".GetLine(2));
-            Assert.AreEqual("456", "123\n\n456".GetLine(3));
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void GetLineError1()
         {
-            StringUtils.GetLine(null, 1);
+            Assert.Throws<ArgumentNullException>(() => StringUtils.GetLine(null, 1));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void GetLineError2()
+        [Test]
+        [TestCase("test", 0)]
+        [TestCase("test", 2)]
+        public void GetLineError2(string text, int line)
         {
-            "test".GetLine(0);
+            Assert.Throws<ArgumentOutOfRangeException>(() => text.GetLine(line));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void GetLineError3()
-        {
-            "test".GetLine(2);
-        }
-
-        [TestMethod]
+        [Test]
         public void ConvertControlCharsTest()
         {
             Assert.AreEqual(@"\r\n\f\b\t", "\r\n\f\b\t".ConvertControlChars());

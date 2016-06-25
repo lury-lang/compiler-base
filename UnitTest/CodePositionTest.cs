@@ -1,73 +1,75 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Lury.Compiling.Utils;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace UnitTest
 {
-    [TestClass]
+    [TestFixture]
     public class CodePositionTest
     {
         private const string SourceName = "name";
 
-        [TestMethod]
+        [Test]
         public void ConstructorTest1()
         {
-            CharPosition pos = new CharPosition(1, 5);
-            int length = 3;
+            var pos = new CharPosition(1, 5);
+            var length = 3;
 
-            CodePosition codePos = new CodePosition(SourceName, pos, length);
+            var codePos = new CodePosition(SourceName, pos, length);
 
             Assert.AreEqual(SourceName, codePos.SourceName);
             Assert.AreEqual(pos, codePos.CharPosition);
             Assert.AreEqual(length, codePos.Length);
         }
 
-        [TestMethod]
+        [Test]
         public void ConstructorTest2()
         {
-            CharPosition pos = new CharPosition(1, 5);
+            var pos = new CharPosition(1, 5);
 
-            CodePosition codePos = new CodePosition(SourceName, pos);
+            var codePos = new CodePosition(SourceName, pos);
 
             Assert.AreEqual(SourceName, codePos.SourceName);
             Assert.AreEqual(pos, codePos.CharPosition);
             Assert.AreEqual(0, codePos.Length);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void ConstructorError()
         {
-            CharPosition pos = new CharPosition(1, 5);
-
-            CodePosition codePos = new CodePosition(SourceName, pos, -1);
+            var pos = new CharPosition(1, 5);
+            // ReSharper disable once ObjectCreationAsStatement
+            Assert.Throws<ArgumentOutOfRangeException>(() => new CodePosition(SourceName, pos, -1));
         }
 
-        [TestMethod]
+        [Test]
         public void ToStringTest()
         {
-            CharPosition pos = new CharPosition(1, 5);
-            int length = 3;
+            var pos = new CharPosition(1, 5);
+            const int length = 3;
 
-            CodePosition codePos = new CodePosition(SourceName, pos, length);
-            string codePosString = codePos.ToString();
+            var codePos = new CodePosition(SourceName, pos, length);
+            var codePosString = codePos.ToString();
 
             StringAssert.Contains(codePosString, pos.ToString());
             StringAssert.Contains(codePosString, SourceName);
         }
 
-        [TestMethod]
+        [Test]
+        [SuppressMessage("ReSharper", "EqualExpressionComparison")]
+        [SuppressMessage("ReSharper", "RedundantCast")]
         public void EqualsTest()
         {
-            CharPosition pos1 = new CharPosition(1, 5);
-            int length1 = 3;
+            var pos1 = new CharPosition(1, 5);
+            const int length1 = 3;
 
-            CharPosition pos2 = new CharPosition(2, 4);
-            int length2 = 2;
+            var pos2 = new CharPosition(2, 4);
+            const int length2 = 2;
 
-            CodePosition codePos1 = new CodePosition(SourceName, pos1, length1);
-            CodePosition codePos2 = new CodePosition(SourceName, pos2, length2);
-            CodePosition codePos3 = new CodePosition(SourceName, pos1, length1);
+            var codePos1 = new CodePosition(SourceName, pos1, length1);
+            var codePos2 = new CodePosition(SourceName, pos2, length2);
+            var codePos3 = new CodePosition(SourceName, pos1, length1);
 
             Assert.IsTrue(codePos1.Equals(codePos1));
             Assert.IsFalse(codePos1.Equals(codePos2));
@@ -87,18 +89,18 @@ namespace UnitTest
             Assert.IsTrue((CodePosition)null == (CodePosition)null);
         }
 
-        [TestMethod]
+        [Test]
         public void GetHashCodeTest()
         {
-            CharPosition pos1 = new CharPosition(1, 5);
-            int length1 = 3;
+            var pos1 = new CharPosition(1, 5);
+            const int length1 = 3;
 
-            CharPosition pos2 = new CharPosition(2, 4);
-            int length2 = 2;
+            var pos2 = new CharPosition(2, 4);
+            const int length2 = 2;
 
-            CodePosition codePos1 = new CodePosition(SourceName, pos1, length1);
-            CodePosition codePos2 = new CodePosition(SourceName, pos2, length2);
-            CodePosition codePos3 = new CodePosition(SourceName, pos1, length1);
+            var codePos1 = new CodePosition(SourceName, pos1, length1);
+            var codePos2 = new CodePosition(SourceName, pos2, length2);
+            var codePos3 = new CodePosition(SourceName, pos1, length1);
 
             Assert.AreEqual(codePos1.GetHashCode(), codePos1.GetHashCode());
             Assert.AreNotEqual(codePos1.GetHashCode(), codePos2.GetHashCode());

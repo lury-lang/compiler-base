@@ -1,0 +1,11 @@
+language: csharp
+solution: compiler-base.sln
+mono:
+  - latest
+  - 4.4.0
+install:
+  - nuget restore compiler-base.sln
+  - nuget install NUnit.Runners -Version 3.2.1 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release compiler-base.sln
+  - mono ./testrunner/NUnit.ConsoleRunner.3.2.1/tools/nunit3-console.exe ./UnitTest/bin/Release/UnitTest.dll

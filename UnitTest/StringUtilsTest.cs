@@ -17,7 +17,7 @@ namespace UnitTest
         [TestCase("\n", 2)]
         [TestCase("\r\n", 2)]
         [TestCase("\u2028", 2)]
-        [TestCase("\u2089", 2)]
+        [TestCase("\u2029", 2)]
         [TestCase("\n\r", 3)]
         public void GetNumberOfLineTest(string text, int line)
         {
@@ -40,12 +40,18 @@ namespace UnitTest
         }
 
         [Test]
-        [TestCase(null, 0)]
+        [TestCase(0)]
+        public void GetPositionByIndexError1(int index)
+        {
+            Assert.Throws<ArgumentNullException>(() => StringUtils.GetPositionByIndex(null, index));
+        }
+
+        [Test]
         [TestCase("test", -1)]
         [TestCase("test", 6)]
-        public void GetPositionByIndexError(string text, int index)
+        public void GetPositionByIndexError2(string text, int index)
         {
-            Assert.Throws<ArgumentNullException>(() => text.GetPositionByIndex(index));
+            Assert.Throws<ArgumentOutOfRangeException>(() => text.GetPositionByIndex(index));
         }
 
         [Test]

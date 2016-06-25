@@ -52,8 +52,8 @@ namespace UnitTest
             var codePos = new CodePosition(SourceName, pos, length);
             var codePosString = codePos.ToString();
 
-            StringAssert.Contains(codePosString, pos.ToString());
-            StringAssert.Contains(codePosString, SourceName);
+            StringAssert.Contains(pos.ToString(), codePosString);
+            StringAssert.Contains(SourceName, codePosString);
         }
 
         [Test]

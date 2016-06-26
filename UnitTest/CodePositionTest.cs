@@ -44,10 +44,11 @@ namespace UnitTest
         }
 
         [Test]
-        public void ToStringTest()
+        [TestCase(1, 5, 3)]
+        [TestCase(2, 1, 0)]
+        public void ToStringTest(int line, int column, int length)
         {
-            var pos = new CharPosition(1, 5);
-            const int length = 3;
+            var pos = new CharPosition(line, column);
 
             var codePos = new CodePosition(SourceName, pos, length);
             var codePosString = codePos.ToString();
@@ -57,16 +58,19 @@ namespace UnitTest
         }
 
         [Test]
+        [TestCase(1, 5, 3, 2, 4, 2)]
+        [TestCase(1, 1, 0, 1, 2, 0)]
+        [TestCase(1, 1, 0, 2, 1, 0)]
+        [TestCase(1, 1, 0, 1, 1, 1)]
         [SuppressMessage("ReSharper", "EqualExpressionComparison")]
         [SuppressMessage("ReSharper", "RedundantCast")]
-        public void EqualsTest()
+        public void EqualsTest(
+            int line1, int column1, int length1,
+            int line2, int column2, int length2)
         {
-            var pos1 = new CharPosition(1, 5);
-            const int length1 = 3;
-
-            var pos2 = new CharPosition(2, 4);
-            const int length2 = 2;
-
+            var pos1 = new CharPosition(line1, column1);
+            var pos2 = new CharPosition(line2, column2);
+            
             var codePos1 = new CodePosition(SourceName, pos1, length1);
             var codePos2 = new CodePosition(SourceName, pos2, length2);
             var codePos3 = new CodePosition(SourceName, pos1, length1);
@@ -90,13 +94,16 @@ namespace UnitTest
         }
 
         [Test]
-        public void GetHashCodeTest()
+        [TestCase(1, 5, 3, 2, 4, 2)]
+        [TestCase(1, 1, 0, 1, 2, 0)]
+        [TestCase(1, 1, 0, 2, 1, 0)]
+        [TestCase(1, 1, 0, 1, 1, 1)]
+        public void GetHashCodeTest(
+            int line1, int column1, int length1,
+            int line2, int column2, int length2)
         {
-            var pos1 = new CharPosition(1, 5);
-            const int length1 = 3;
-
-            var pos2 = new CharPosition(2, 4);
-            const int length2 = 2;
+            var pos1 = new CharPosition(line1, column1);
+            var pos2 = new CharPosition(line2, column2);
 
             var codePos1 = new CodePosition(SourceName, pos1, length1);
             var codePos2 = new CodePosition(SourceName, pos2, length2);

@@ -11,11 +11,17 @@ namespace UnitTest
         private const string SourceName = "name";
 
         [Test]
-        public void ConstructorTest1()
+        [TestCase(1, 1, 0)]
+        [TestCase(1, 5, 0)]
+        [TestCase(3, 1, 0)]
+        [TestCase(3, 5, 0)]
+        [TestCase(1, 1, 1)]
+        [TestCase(1, 5, 1)]
+        [TestCase(3, 1, 1)]
+        [TestCase(3, 5, 1)]
+        public void ConstructorTest1(int line, int column, int length)
         {
-            var pos = new CharPosition(1, 5);
-            var length = 3;
-
+            var pos = new CharPosition(line, column);
             var codePos = new CodePosition(SourceName, pos, length);
 
             Assert.AreEqual(SourceName, codePos.SourceName);
@@ -24,10 +30,13 @@ namespace UnitTest
         }
 
         [Test]
-        public void ConstructorTest2()
+        [TestCase(1, 1)]
+        [TestCase(1, 5)]
+        [TestCase(3, 1)]
+        [TestCase(3, 5)]
+        public void ConstructorTest2(int line, int column)
         {
-            var pos = new CharPosition(1, 5);
-
+            var pos = new CharPosition(line, column);
             var codePos = new CodePosition(SourceName, pos);
 
             Assert.AreEqual(SourceName, codePos.SourceName);
@@ -36,9 +45,13 @@ namespace UnitTest
         }
 
         [Test]
-        public void ConstructorError()
+        [TestCase(1, 1)]
+        [TestCase(1, 5)]
+        [TestCase(3, 1)]
+        [TestCase(3, 5)]
+        public void ConstructorError(int line, int column)
         {
-            var pos = new CharPosition(1, 5);
+            var pos = new CharPosition(line, column);
             // ReSharper disable once ObjectCreationAsStatement
             Assert.Throws<ArgumentOutOfRangeException>(() => new CodePosition(SourceName, pos, -1));
         }

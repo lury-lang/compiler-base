@@ -9,46 +9,42 @@ namespace UnitTest
     public class CharPositionTest
     {
         [Test]
-        public void LineTest()
+        [TestCase(1, 1)]
+        [TestCase(1, 5)]
+        [TestCase(3, 1)]
+        [TestCase(3, 5)]
+        public void CtorTest(int line, int column)
         {
-            var pos = new CharPosition(1, 5);
-            Assert.AreEqual(1, pos.Line);
-            pos = new CharPosition(3, pos.Column);
-            Assert.AreEqual(3, pos.Line);
+            var pos = new CharPosition(line, column);
+
+            Assert.AreEqual(line, pos.Line);
+            Assert.AreEqual(column, pos.Column);
         }
 
         [Test]
-        public void LineError()
+        [TestCase(0, 1)]
+        [TestCase(1, 0)]
+        [TestCase(0, 1)]
+        [TestCase(0, 0)]
+        public void CtorError(int line, int column)
         {
-            var pos = new CharPosition(1, 5);
-
             // ReSharper disable once ObjectCreationAsStatement
-            Assert.Throws<ArgumentOutOfRangeException>(() => new CharPosition(0, pos.Column));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new CharPosition(line, column));
         }
 
         [Test]
-        public void ColumnTest()
+        [TestCase(1, 1)]
+        [TestCase(1, 5)]
+        [TestCase(3, 1)]
+        [TestCase(3, 5)]
+        public void IsEmptyTest1(int line, int column)
         {
-            var pos = new CharPosition(1, 5);
-            Assert.AreEqual(5, pos.Column);
-            pos = new CharPosition(pos.Line, 2);
-            Assert.AreEqual(2, pos.Column);
+            Assert.IsFalse(new CharPosition(line, column).IsEmpty);
         }
 
         [Test]
-        public void ColumnError()
+        public void IsEmptyTest2()
         {
-            var pos = new CharPosition(1, 5);
-
-            // ReSharper disable once ObjectCreationAsStatement
-            Assert.Throws<ArgumentOutOfRangeException>(() => new CharPosition(pos.Line, 0));
-        }
-
-        [Test]
-        public void IsEmptyTest()
-        {
-            Assert.IsFalse(new CharPosition(1, 5).IsEmpty);
-            Assert.IsFalse(new CharPosition(1, 1).IsEmpty);
             Assert.IsTrue(new CharPosition().IsEmpty);
             Assert.IsTrue(CharPosition.Empty.IsEmpty);
         }

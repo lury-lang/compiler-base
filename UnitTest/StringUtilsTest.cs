@@ -41,6 +41,8 @@ namespace UnitTest
 
         [Test]
         [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(-1)]
         public void GetPositionByIndexError1(int index)
         {
             Assert.Throws<ArgumentNullException>(() => StringUtils.GetPositionByIndex(null, index));
@@ -55,19 +57,21 @@ namespace UnitTest
         }
 
         [Test]
-        public void GeneratePointingStrings1Test()
+        [TestCase("abc", 0, 0)]
+        [TestCase("abc", 1, 2)]
+        public void GeneratePointingStrings1Test(string text, int index, int length)
         {
-            const string source = "abc";
             CharPosition pos;
-            var strs = source.GeneratePointingStrings(1, 2, out pos);
+            var strs = text.GeneratePointingStrings(index, length, out pos);
 
             CollectionAssert.AllItemsAreNotNull(strs);
             Assert.AreEqual(2, strs.Length);
-            Assert.AreEqual(new CharPosition(1, 2), pos);
-            StringAssert.Contains(strs[0], source);
+            Assert.AreEqual(text.GetPositionByIndex(index), pos);
+            StringAssert.Contains(strs[0], text);
         }
 
         [Test]
+        [TestCase(0, 0)]
         [TestCase(1, 2)]
         public void GeneratePointingStrings1Error1(int index, int length)
         {

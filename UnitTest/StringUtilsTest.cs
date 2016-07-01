@@ -91,37 +91,21 @@ namespace UnitTest
         }
 
         [Test]
-        public void GeneratePointingStrings2Test()
+        [TestCase("abc", 1, 2, 0)]
+        [TestCase("abc", 1, 1, 1)]
+        [TestCase("abc\n", 2, 1, 0)]
+        [TestCase("abc\ndef", 2, 2, 2)]
+        public void GeneratePointingStrings2Test(string text, int line, int column, int length)
         {
-            const string source = "abc";
-            var strs = source.GeneratePointingStrings(new CharPosition(1, 2), 0);
-
-            CollectionAssert.AllItemsAreNotNull(strs);
-            Assert.AreEqual(2, strs.Length);
-            StringAssert.Contains(strs[0], source);
-        }
-
-        [Test]
-        public void GeneratePointingStrings3Test()
-        {
-            const string source = "abc\n";
-            var strs = source.GeneratePointingStrings(new CharPosition(2, 1), 0);
+            var strs = text.GeneratePointingStrings(new CharPosition(line, column), length);
 
             CollectionAssert.AllItemsAreNotNull(strs);
             Assert.AreEqual(2, strs.Length);
         }
 
         [Test]
-        public void GeneratePointingStrings4Test()
-        {
-            const string source = "abc\n";
-            var strs = source.GeneratePointingStrings(new CharPosition(2, 1), 1);
-
-            CollectionAssert.AllItemsAreNotNull(strs);
-            Assert.AreEqual(2, strs.Length);
-        }
-
-        [Test]
+        [TestCase(1, 1, 0)]
+        [TestCase(1, 1, 2)]
         [TestCase(1, 2, 2)]
         public void GeneratePointingStrings2Error1(int line, int column, int length)
         {

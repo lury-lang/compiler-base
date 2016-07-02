@@ -141,9 +141,12 @@ namespace UnitTest
         }
 
         [Test]
-        public void GetLineError1()
+        [TestCase(1)]
+        [TestCase(3)]
+        [TestCase(5)]
+        public void GetLineError1(int line)
         {
-            Assert.Throws<ArgumentNullException>(() => StringUtils.GetLine(null, 1));
+            Assert.Throws<ArgumentNullException>(() => StringUtils.GetLine(null, line));
         }
 
         [Test]
